@@ -1,0 +1,136 @@
+:root{
+    --border-radius: 20px;
+    --light-grey: #eee;
+    --white: white;
+    --dark-grey: rgb(64, 63, 63);
+    --darkest-color: black;
+}
+
+body{
+    background-color: var(--light-grey);
+    font-family: 'Roboto', sans-serif;
+}
+
+.container{
+    width: 25vw;
+    height: 70vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--white);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: var(--border-radius);
+}
+
+.controls{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light-grey);
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.zeros-poles{
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.z-p{
+    text-align: center;
+    width: 50%;
+    padding: 10px;
+    background-color: rgb(64, 63, 63);
+    color: var(--white);
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.z-p:first-child{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.z-p:last-child{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.active-mode{
+    background-color: black;
+}
+
+.z-container{
+    position: relative;
+    aspect-ratio: 1/1;
+    background-color: var(--light-grey);
+    border-radius: var(--border-radius);
+    padding: 35px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.z-graph{
+    border: black solid 2px;
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+}
+
+.zero{
+    width: 15px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: red;
+    cursor: move;
+}
+
+.pole{
+    width: 15px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 3px solid darkblue;
+    background-color: var(--white);
+    cursor: move;
+}
+
+.menu{
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: var(--darkest-color);
+    color: var(--white);
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0);
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+}
+
+.menu-show{
+    transform: scale(1);
+    opacity: 1;
+}
+
+.option{
+    padding: 5px;
+    transition: 0.3s;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.option:hover{
+    background-color: var(--dark-grey);
+}
