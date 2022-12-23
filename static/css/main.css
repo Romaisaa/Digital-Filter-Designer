@@ -9,20 +9,32 @@
 body{
     background-color: var(--light-grey);
     font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    margin: 0;
+}
+
+.bigest-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100vw;
+    height: 100vh;
 }
 
 .container{
-    width: 25vw;
-    height: 70vh;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 65vw;
+    height: 90vh;
     background-color: var(--white);
     border-radius: 20px;
     display: flex;
-    flex-direction: column;
     padding: var(--border-radius);
+}
+
+.z-cont{
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    height: 90vh;
 }
 
 .controls{
@@ -32,6 +44,31 @@ body{
     border-radius: var(--border-radius);
     margin-bottom: 20px;
     padding: 20px;
+}
+
+.btn{
+    padding: 10px;
+    width: 50%;
+    background-color: var(--dark-grey);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn:hover{
+    background-color: var(--darkest-color);
+}
+
+.import-btn{
+    margin-bottom: 20px;
+}
+
+.export-btn{
+    margin-top: 60px;
 }
 
 .zeros-poles{
@@ -65,7 +102,7 @@ body{
 }
 
 .z-container{
-    position: relative;
+    /* position: relative; */
     aspect-ratio: 1/1;
     background-color: var(--light-grey);
     border-radius: var(--border-radius);
@@ -75,18 +112,42 @@ body{
 }
 
 .z-graph{
-    border: black solid 2px;
+    border: rgb(0, 181, 241) solid 2px;
     border-radius: 50%;
-    height: 100%;
     width: 100%;
+    aspect-ratio: 1/1;
+    position: relative;
+}
+
+.x-axis{
+    width: 110%;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.3;
+}
+
+.y-axis{
+    width: 2px;
+    height: 110%;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.3;
 }
 
 .zero{
     width: 15px;
     aspect-ratio: 1/1;
     border-radius: 50%;
-    background-color: red;
+    background-color: rgb(255, 0, 0);
     cursor: move;
+    transform: translate(-50%, -50%);
 }
 
 .pole{
@@ -96,13 +157,14 @@ body{
     border: 3px solid darkblue;
     background-color: var(--white);
     cursor: move;
+    transform: translate(-150%, -150%);
 }
 
 .menu{
     border-radius: 10px;
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 25%;
     background-color: var(--darkest-color);
     color: var(--white);
     padding: 10px 30px;
@@ -133,4 +195,99 @@ body{
 
 .option:hover{
     background-color: var(--dark-grey);
+}
+
+.test{
+    position: absolute;
+    width: 15px;
+    transform: translate(-50%, -50%);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: rgb(0, 255, 17);
+    pointer-events: none;
+}
+
+.circle-test{
+    position: absolute;
+    width: 15px;
+    transform: translate(-50%, -50%);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: rgb(167, 84, 1);
+}
+
+.z-figuers{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fig{
+    background-color: var(--light-grey);
+    width: 100%;
+    height: 50%;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+}
+
+.sig{
+    height: 29% !important;
+    margin-bottom: 10px;
+}
+
+.sig-container{
+    background-color: var(--white);
+    height: 90vh;
+    width: 26.5vw;
+    border-radius: var(--border-radius);
+    padding: var(--border-radius);
+}
+
+.add-sig{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 30%;
+    margin-bottom: 10px;
+    
+}
+
+.import-sig{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background-color: var(--light-grey);
+}
+
+.generate-sig{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.generate-sig-pad{
+    /* width: 120%; */
+    height: 100%;
+    background-color: var(--dark-grey);
+    border-radius: var(--border-radius);
+    cursor: cell;
+}
+
+.import-sig-btn{
+    width: 60%;
+    margin: 0 !important;
+}
+
+.generate-sig-title,
+.import-sig-title{
+    padding-left: 20px;
+}
+.generate-sig-title{
+    margin-bottom: 5px;
 }

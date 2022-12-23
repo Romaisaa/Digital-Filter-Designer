@@ -12,21 +12,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="controls">
-            <div class="zeros-poles">
-                <div class="zeros z-p active-mode">Zeros</div>
-                <div class="poles z-p">Poles</div>
+    <div class="bigest-container">
+        <div class="container">
+            <div class="z-cont">
+                <div class="btn import-btn">Import Filter</div>
+                <div class="controls">
+                    <div class="zeros-poles">
+                        <div class="zeros z-p active-mode">Zeros</div>
+                        <div class="poles z-p">Poles</div>
+                    </div>
+                </div>
+                <div class="z-container">
+                    <div class="z-graph">
+                        <div class="test"></div>
+                        <div class="circle-test"></div>
+                        <div class="x-axis"></div>
+                        <div class="y-axis"></div>
+                    </div>
+                </div>
+                <div class="btn export-btn">Export Filter</div>
+            </div>
+            <div class="z-figuers">
+                <div class="fig filter"></div>
+                <div class="fig phase"></div>
+                <div class="btn phase-correct-btn">Correct Phase</div>
             </div>
         </div>
-        <div class="z-container">
-            <div class="z-graph"></div>
+        <div class="sig-container">
+            <div class="add-sig">
+                <div class="import-sig">
+                    <div class="import-sig-title">Import Signal</div>
+                    <div class="btn import-sig-btn">Import</div>
+                </div>
+                <div class="generate-sig">
+                    <div class="generate-sig-title">Generate Signal</div>
+                    <div class="generate-sig-pad"></div>
+                </div>
+            </div>
+            <div class="fig sig input-sig"></div>
+            <div class="fig sig output-sig"></div>
         </div>
     </div>
     <div class="menu">
         <div class="convert option">Convert to pole</div>
         <div class="delete option">Delete</div>
     </div>
+
 </body>
 <script src="/static/js/main.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

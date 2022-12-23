@@ -1,8 +1,14 @@
 var zeros, poles 
+var zerosCoordinates = []
+var polesCoordinates = []
+console.log(zerosCoordinates)
 let zContainer = document.querySelector(".z-container")
 zContainer.addEventListener("click", (e) => {
     if (!e.target.classList.contains("zero") && !e.target.classList.contains("pole")) {
         addZeros(e)
+        console.log(zerosCoordinates)
+        console.log(polesCoordinates)
+
     }
 })
 
@@ -22,16 +28,28 @@ document.addEventListener("click", (e) => {
 })
 
 //*************************** fuctions ***************************//
-
+var circleMove
 function addZeros(e) {
-    var x = e.pageX + 'px';
+    clearInterval(circleMove)   
+    var x = e.pageX  + 'px';
     var y = e.pageY + 'px';
     let zero = document.createElement("div")
-    if (mode == "Zeros") { zero.className = "item zero" }
-    else if (mode == "Poles") { zero.className = "item pole" }
     zero.style.position = "absolute"
-    zero.style.left = `calc(${x} - 50vw + ${zContainer.clientWidth/2}px)`
-    zero.style.top = `calc(${y} - 50vh + ${zContainer.clientHeight/2}px - 45px)`
+    zero.style.left = x
+    zero.style.top = y
+    if (mode == "Zeros") {
+        zero.className = "item zero"
+        zerosCoordinates.push([e.pageX-72.214, e.pageY - 236.57])
+    }
+    else if (mode == "Poles") {
+        zero.className = "item pole"
+        polesCoordinates.push([e.pageX-72.214, e.pageY - 236.57])
+    }
+    console.log(zerosCoordinates.length)
+    circleMove = setInterval(function() {
+        a = (a - Math.PI / 360) % (Math.PI);
+      rotate(a);
+    }, 1);
     zContainer.append(zero);
 }
 
@@ -47,8 +65,6 @@ document.addEventListener('mousedown', function (e) {
     if (e.target.classList.contains("zero") || e.target.classList.contains("pole")) {
         e.target.classList.add("drag")
         el = document.querySelector('.drag');
-        console.log("gooo")
-        console.log(el)
 
         e.preventDefault();
         
@@ -127,3 +143,39 @@ let deletebtn = document.querySelector(".delete")
 deletebtn.addEventListener("click", (e) => {
     document.querySelector(".selected").remove()
 })
+
+
+////////////////////////////////////////////////
+let body = document.querySelector("body")
+let zGraph = document.querySelector(".z-graph")
+var filter = []
+console.log(zGraph.clientWidth/2)
+document.querySelector(".test").style.left = zGraph.clientWidth/2+ 'px'
+document.querySelector(".test").style.top = zGraph.clientHeight/2+ 'px'
+var x = zGraph.clientWidth/2
+var y = zGraph.clientHeight/2
+var r = zGraph.clientWidth / 2
+console.log([x,y, r])
+var a = 0
+var standardization = 0
+function rotate(a) {
+  
+    var px = x + r * Math.cos(a); // <-- that's the maths you need
+    var py = y + r * Math.sin(a);
+    
+    document.querySelector('.circle-test').style.left = px + "px";
+    document.querySelector('.circle-test').style.top = py + "px";
+    if (zerosCoordinates.length != 0 ) {
+        if (Math.round(a) == 0) {
+            standardization = Math.sqrt((px - x) ** 2 + (py - y) ** 2)
+        }
+        console.log(zerosCoordinates[0][1])
+        console.log(py)
+        filter.push(Math.sqrt((px - zerosCoordinates[0][0]) ** 2 + (py - zerosCoordinates[0][1]) ** 2)/standardization)
+    }
+    if (-a - Math.PI > -0.001) {
+        clearInterval(circleMove)
+        console.log(filter)
+    }
+  }
+  
