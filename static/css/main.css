@@ -157,7 +157,7 @@ body{
     border: 3px solid darkblue;
     background-color: var(--white);
     cursor: move;
-    transform: translate(-150%, -150%);
+    transform: translate(-50%, -50%);
 }
 
 .menu{
