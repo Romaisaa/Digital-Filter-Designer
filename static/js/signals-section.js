@@ -51,8 +51,8 @@ function draw_signals() {
 
 function get_signal_graph_layout() {
   return {
-    width: 500,
-    height: 300,
+    width: 460,
+    height: 200,
     xaxis: {
       title: {
         text: "time",
@@ -73,6 +73,7 @@ function get_signal_graph_layout() {
           color: "#000522e0",
         },
       },
+      range: [0, 300],
     },
     paper_bgcolor: "transparent",
     plot_bgcolor: "transparent",

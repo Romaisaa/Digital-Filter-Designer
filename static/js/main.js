@@ -186,3 +186,26 @@ function rotate(a) {
     console.log(filter);
   }
 }
+
+/////////////////////////////////////
+const generateSignalButton = document.getElementById("generate-sig");
+const importSignalButton = document.getElementById("import-sig");
+
+generateSignalButton.addEventListener("click", () => {
+  generateMode = true;
+  document
+    .getElementsByClassName("generate-sig")[0]
+    .classList.remove("hide-element");
+  document
+    .getElementsByClassName("upload-form")[0]
+    .classList.add("hide-element");
+});
+
+importSignalButton.addEventListener("click", () => {
+  document
+    .getElementsByClassName("generate-sig")[0]
+    .classList.add("hide-element");
+  document
+    .getElementsByClassName("upload-form")[0]
+    .classList.remove("hide-element");
+});

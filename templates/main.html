@@ -44,13 +44,22 @@
       <div class="sig-container">
         <div class="add-sig">
           <div class="import-sig">
-            <div class="import-sig-title">Import Signal</div>
-            <div class="btn import-sig-btn">Import</div>
+            <div class="import-sig-title" id="generate-sig">
+              Generate Signal
+            </div>
+            <div class="btn import-sig-btn" id="import-sig">Import Signal</div>
           </div>
           <div class="generate-sig">
-            <div class="generate-sig-title">Generate Signal</div>
             <div class="generate-sig-pad" id="generate-sig-pad"></div>
           </div>
+          <form
+            id="upload-form"
+            class="upload-form hide-element"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <input type="file" id="file-upload" accept=".csv" name="file" />
+          </form>
         </div>
         <div class="fig sig input-sig" id="input-sig"></div>
         <div class="fig sig output-sig" id="output-sig"></div>
@@ -64,7 +73,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
   <script src="/static/js/main.js"></script>
-  <script src="/static/js/generate-signal-pad.js"></script>
+  <script src="/static/js/signal-generation.js"></script>
   <script src="/static/js/filter-section.js"></script>
   <script src="/static/js/signals-section.js"></script>
 </html>
