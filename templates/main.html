@@ -1,65 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/static/css/main.css">
-    <link rel="stylesheet" href="/static/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="/static/css/main.css" />
+    <link rel="stylesheet" href="/static/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="bigest-container">
-        <div class="container">
-            <div class="z-cont">
-                <div class="btn import-btn">Import Filter</div>
-                <div class="controls">
-                    <div class="zeros-poles">
-                        <div class="zeros z-p active-mode">Zeros</div>
-                        <div class="poles z-p">Poles</div>
-                    </div>
-                </div>
-                <div class="z-container">
-                    <div class="z-graph">
-                        <div class="test"></div>
-                        <div class="circle-test"></div>
-                        <div class="x-axis"></div>
-                        <div class="y-axis"></div>
-                    </div>
-                </div>
-                <div class="btn export-btn">Export Filter</div>
+      <div class="container">
+        <div class="z-cont">
+          <div class="btn import-btn">Import Filter</div>
+          <div class="controls">
+            <div class="zeros-poles">
+              <div class="zeros z-p active-mode">Zeros</div>
+              <div class="poles z-p">Poles</div>
             </div>
-            <div class="z-figuers">
-                <div class="fig filter"></div>
-                <div class="fig phase"></div>
-                <div class="btn phase-correct-btn">Correct Phase</div>
+          </div>
+          <div class="z-container">
+            <div class="z-graph">
+              <div class="test"></div>
+              <div class="circle-test"></div>
+              <div class="x-axis"></div>
+              <div class="y-axis"></div>
             </div>
+          </div>
+          <div class="btn export-btn">Export Filter</div>
         </div>
-        <div class="sig-container">
-            <div class="add-sig">
-                <div class="import-sig">
-                    <div class="import-sig-title">Import Signal</div>
-                    <div class="btn import-sig-btn">Import</div>
-                </div>
-                <div class="generate-sig">
-                    <div class="generate-sig-title">Generate Signal</div>
-                    <div class="generate-sig-pad"></div>
-                </div>
-            </div>
-            <div class="fig sig input-sig"></div>
-            <div class="fig sig output-sig"></div>
+        <div class="z-figuers">
+          <div class="fig filter" id="fig-mag"></div>
+          <div class="fig phase" id="fig-phase"></div>
+          <div class="btn phase-correct-btn">Correct Phase</div>
         </div>
+      </div>
+      <div class="sig-container">
+        <div class="add-sig">
+          <div class="import-sig">
+            <div class="import-sig-title">Import Signal</div>
+            <div class="btn import-sig-btn">Import</div>
+          </div>
+          <div class="generate-sig">
+            <div class="generate-sig-title">Generate Signal</div>
+            <div class="generate-sig-pad" id="generate-sig-pad"></div>
+          </div>
+        </div>
+        <div class="fig sig input-sig" id="input-sig"></div>
+        <div class="fig sig output-sig" id="output-sig"></div>
+      </div>
     </div>
     <div class="menu">
-        <div class="convert option">Convert to pole</div>
-        <div class="delete option">Delete</div>
+      <div class="convert option">Convert to pole</div>
+      <div class="delete option">Delete</div>
     </div>
-
-</body>
-<script src="/static/js/main.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+  <script src="/static/js/main.js"></script>
+  <script src="/static/js/generate-signal-pad.js"></script>
+  <script src="/static/js/filter-section.js"></script>
+  <script src="/static/js/signals-section.js"></script>
 </html>
