@@ -1,7 +1,8 @@
 var zeros, poles;
 var zerosCoordinates = [];
 var polesCoordinates = [];
-console.log(zerosCoordinates);
+let importBtn = document.querySelector(".import-btn")
+let controls = document.querySelector(".controls")
 let zContainer = document.querySelector(".z-container");
 zContainer.addEventListener("click", (e) => {
   if (
@@ -9,8 +10,6 @@ zContainer.addEventListener("click", (e) => {
     !e.target.classList.contains("pole")
   ) {
     addZeros(e);
-    console.log(zerosCoordinates);
-    console.log(polesCoordinates);
   }
 });
 
@@ -25,32 +24,29 @@ document.addEventListener("click", (e) => {
     }
     e.target.classList.add("active-mode");
     mode = e.target.innerHTML;
-    console.log(mode);
   }
 });
 
 //*************************** fuctions ***************************//
 var circleMove;
+var xPoint,yPoint
 function addZeros(e) {
   clearInterval(circleMove);
-  var x = e.pageX + "px";
-  var y = e.pageY + "px";
+  var xPoint = e.pageX - 30 ;
+  var yPoint = e.pageY - importBtn.clientHeight - controls.clientHeight - 70 ;
   let zero = document.createElement("div");
   zero.style.position = "absolute";
-  zero.style.left = x;
-  zero.style.top = y;
+  zero.style.left = xPoint+ "px";
+  zero.style.top = yPoint+ "px";
+  console.log(xPoint )
+  console.log([(xPoint - zContainer.clientWidth/2)/r, (zContainer.clientHeight/2 - yPoint)/r])
   if (mode == "Zeros") {
     zero.className = "item zero";
-    zerosCoordinates.push([e.pageX - 72.214, e.pageY - 236.57]);
+    zerosCoordinates.push([e.pageX - 30, e.pageY - importBtn.clientHeight - controls.clientHeight - 70]);
   } else if (mode == "Poles") {
     zero.className = "item pole";
-    polesCoordinates.push([e.pageX - 72.214, e.pageY - 236.57]);
+    polesCoordinates.push([e.pageX - 30, e.pageY - importBtn.clientHeight - controls.clientHeight - 70]);
   }
-  console.log(zerosCoordinates.length);
-  circleMove = setInterval(function () {
-    a = (a - Math.PI / 360) % Math.PI;
-    rotate(a);
-  }, 1);
   zContainer.append(zero);
 }
 
@@ -154,38 +150,33 @@ deletebtn.addEventListener("click", (e) => {
 let body = document.querySelector("body");
 let zGraph = document.querySelector(".z-graph");
 var filter = [];
-console.log(zGraph.clientWidth / 2);
-document.querySelector(".test").style.left = zGraph.clientWidth / 2 + "px";
-document.querySelector(".test").style.top = zGraph.clientHeight / 2 + "px";
-var x = zGraph.clientWidth / 2;
-var y = zGraph.clientHeight / 2;
-var r = zGraph.clientWidth / 2;
-console.log([x, y, r]);
+document.querySelector(".test").style.left = zContainer.clientWidth / 2 + "px";
+document.querySelector(".test").style.top = zContainer.clientHeight / 2 + "px";
+var x = zContainer.clientWidth * 0.9 / 2;
+var y = zContainer.clientHeight * 0.9 / 2;
+var r = zContainer.clientWidth * 0.9 / 2;
 var a = 0;
-var standardization = 0;
-function rotate(a) {
-  var px = x + r * Math.cos(a); // <-- that's the maths you need
-  var py = y + r * Math.sin(a);
+// function rotate(a) {
+//   var px = x + r * Math.cos(a); // <-- that's the maths you need
+//   var py = y + r * Math.sin(a);
 
-  document.querySelector(".circle-test").style.left = px + "px";
-  document.querySelector(".circle-test").style.top = py + "px";
-  if (zerosCoordinates.length != 0) {
-    if (Math.round(a) == 0) {
-      standardization = Math.sqrt((px - x) ** 2 + (py - y) ** 2);
-    }
-    console.log(zerosCoordinates[0][1]);
-    console.log(py);
-    filter.push(
-      Math.sqrt(
-        (px - zerosCoordinates[0][0]) ** 2 + (py - zerosCoordinates[0][1]) ** 2
-      ) / standardization
-    );
-  }
-  if (-a - Math.PI > -0.001) {
-    clearInterval(circleMove);
-    console.log(filter);
-  }
-}
+//   document.querySelector(".circle-test").style.left = px + "px";
+//   document.querySelector(".circle-test").style.top = py + "px";
+//   if (zerosCoordinates.length != 0) {
+//     if (Math.round(a) == 0) {
+//       standardization = Math.sqrt((px - x) ** 2 + (py - y) ** 2);
+//     }
+
+//     filter.push(
+//       Math.sqrt(
+//         (px - zerosCoordinates[0][0]) ** 2 + (py - zerosCoordinates[0][1]) ** 2
+//       ) / standardization
+//     );
+//   }
+//   if (-a - Math.PI > -0.001) {
+//     clearInterval(circleMove);
+//   }
+// }
 
 /////////////////////////////////////
 const generateSignalButton = document.getElementById("generate-sig");
@@ -209,3 +200,15 @@ importSignalButton.addEventListener("click", () => {
     .getElementsByClassName("upload-form")[0]
     .classList.remove("hide-element");
 });
+
+//////////////////////////////////////////////////////
+let sigModes = document.getElementsByClassName("sig-mode")
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("sig-mode")) {
+    for (i = 0; i < sigModes.length; i++){
+      console.log("ahhh")
+      sigModes[i].classList.remove("active-sig-mode")
+    }
+    e.target.classList.add("active-sig-mode")
+  }
+})

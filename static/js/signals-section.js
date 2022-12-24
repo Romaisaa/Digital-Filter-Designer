@@ -41,7 +41,7 @@ function draw_signals() {
       range: [cnt - 100, cnt],
     },
   };
-  console.log(cnt);
+  // console.log(cnt);
 
   if (cnt > 100) {
     Plotly.relayout("input-sig", xMove);

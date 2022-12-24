@@ -11,12 +11,13 @@ body {
   font-family: "Roboto", sans-serif;
   height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
 .bigest-container {
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  margin: 10px;
   width: 100vw;
   height: 100vh;
 }
@@ -28,6 +29,7 @@ body {
   border-radius: 20px;
   display: flex;
   padding: var(--border-radius);
+  margin-right: 10px;
 }
 
 .z-cont {
@@ -102,11 +104,11 @@ body {
 }
 
 .z-container {
-  /* position: relative; */
+  position: relative;
   aspect-ratio: 1/1;
   background-color: var(--light-grey);
   border-radius: var(--border-radius);
-  padding: 35px;
+  /* padding: 35px; */
   cursor: pointer;
   overflow: hidden;
 }
@@ -114,9 +116,12 @@ body {
 .z-graph {
   border: rgb(0, 181, 241) solid 2px;
   border-radius: 50%;
-  width: 100%;
+  width: 90%;
   aspect-ratio: 1/1;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .x-axis {
@@ -261,6 +266,13 @@ body {
   margin-bottom: 10px;
   border-radius: 10px;
   background-color: var(--light-grey);
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.active-sig-mode{
+    background-color: var(--darkest-color) !important;
 }
 
 .generate-sig {
@@ -279,16 +291,16 @@ body {
 }
 
 .import-sig-btn {
-  width: 60%;
+  width: 50%;
   margin: 0 !important;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .generate-sig-title,
 .import-sig-title {
-  padding-left: 20px;
-}
-.generate-sig-title {
-  margin-bottom: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .upload-form {
@@ -299,4 +311,8 @@ body {
 
 .hide-element {
   display: none;
+}
+
+.sig-mode:hover{
+    background-color: var(--dark-grey);
 }

@@ -18,7 +18,7 @@ uploadSignal.addEventListener("change", (event) => {
 
 function read_csv() {
   var formData = new FormData($(`#upload-form`)[0]);
-  console.log(formData);
+  // console.log(formData);
   $.ajax({
     type: "POST",
     url: `/import-csv`,
@@ -35,7 +35,7 @@ function read_csv() {
 }
 
 function get_signal_data(point) {
-  console.log(point);
+  // console.log(point);
   if (inputSignal.length < 100) {
     inputSignal.push(point);
   } else {
