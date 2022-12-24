@@ -1,6 +1,7 @@
 var zeros, poles;
 var zerosCoordinates = [];
 var polesCoordinates = [];
+var selectedPoint;
 let importBtn = document.querySelector(".import-btn");
 let controls = document.querySelector(".controls");
 let zContainer = document.querySelector(".z-container");
@@ -27,13 +28,19 @@ document.addEventListener("click", (e) => {
   }
 });
 
-//*************************** fuctions ***************************//
+//*************************** functions ***************************//
 var circleMove;
 var xPoint, yPoint;
 function addZeros(e) {
   clearInterval(circleMove);
-  var xPoint = e.pageX - 30;
-  var yPoint = e.pageY - importBtn.clientHeight - controls.clientHeight - 70;
+
+  draw_point(e.pageX, e.pageY);
+}
+
+function draw_point(xPoint, yPoint) {
+  var xPoint = xPoint - 30;
+  var yPoint = yPoint - importBtn.clientHeight - controls.clientHeight - 70;
+
   let zero = document.createElement("div");
   zero.style.position = "absolute";
   zero.style.left = xPoint + "px";
@@ -54,7 +61,6 @@ function addZeros(e) {
   zContainer.append(zero);
   change_filter();
 }
-
 //*************************** move ***************************//
 
 var el;
@@ -78,10 +84,21 @@ document.addEventListener("mousedown", function (e) {
     startPosX = e.clientX;
     startPosY = e.clientY;
 
+    selectedPoint = calculateCoordinates(startPosX, startPosY);
+
     document.addEventListener("mousemove", mouseMove);
 
     document.addEventListener("mouseup", function (e) {
       e.target.classList.remove("drag");
+
+      if (selectedPoint) {
+        update_points(
+          selectedPoint,
+          calculateCoordinates(e.pageX, e.pageY),
+          "drag"
+        );
+      }
+      selectedPoint = null;
 
       document.removeEventListener("mousemove", mouseMove);
     });
@@ -148,6 +165,7 @@ convert.addEventListener("click", (e) => {
 let deletebtn = document.querySelector(".delete");
 deletebtn.addEventListener("click", (e) => {
   document.querySelector(".selected").remove();
+  update_points(selectedPoint, {}, "drag");
 });
 
 ////////////////////////////////////////////////
@@ -210,7 +228,6 @@ let sigModes = document.getElementsByClassName("sig-mode");
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("sig-mode")) {
     for (i = 0; i < sigModes.length; i++) {
-      console.log("ahhh");
       sigModes[i].classList.remove("active-sig-mode");
     }
     e.target.classList.add("active-sig-mode");
@@ -237,5 +254,47 @@ function validate_complex(input) {
   } else {
     alert("false");
     return false;
+  }
+}
+
+function calculateCoordinates(xPosition, yPosition) {
+  return {
+    x: (xPosition - 30 - zContainer.clientWidth / 2) / r,
+    y:
+      (zContainer.clientHeight / 2 -
+        (yPosition - importBtn.clientHeight - controls.clientHeight - 70)) /
+      r,
+  };
+}
+
+function update_points(oldPositions, newPositions, operation) {
+  for (let i = 0; i < zerosCoordinates.length; i++) {
+    if (
+      Math.abs(zerosCoordinates[i].x - oldPositions.x) < 0.05 &&
+      Math.abs(zerosCoordinates[i].y - oldPositions.y) < 0.05
+    ) {
+      if (operation == "drag") {
+        zerosCoordinates[i] = newPositions;
+      } else {
+        delete zerosCoordinates[i];
+      }
+      change_filter();
+      return;
+    }
+  }
+
+  for (let i = 0; i < polesCoordinates.length; i++) {
+    if (
+      Math.abs(polesCoordinates[i].x - oldPositions.x) < 0.05 &&
+      Math.abs(polesCoordinates[i].y - oldPositions.y) < 0.05
+    ) {
+      if (operation == "drag") {
+        polesCoordinates[i] = newPositions;
+      } else {
+        delete polesCoordinates[i];
+      }
+      change_filter();
+      return;
+    }
   }
 }
