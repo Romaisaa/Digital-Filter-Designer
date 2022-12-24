@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, jsonify, request
+from utlis import parseToComplex, filterResponse
 app = Flask(__name__, template_folder="templates")
 
 
@@ -12,18 +13,23 @@ def index():
 
 @app.route('/filter', methods=['POST'])
 def update_filter():
-    body = request.json
-    # TODO: Calling processing and get the right x, y
-    x = [1, 2, 3, 4, 5, 6]
-    y = [2, 1, 2, 0, 10, 11]
+    # body = request.json
+    # zeros & poles form from unit circle
+    zeros=[{"x":0.5, "y":-1},{"x":-1, "y":0.5},{"x":-0.5, "y":1}]
+    poles=[{"x":-0.8, "y":-1},{"x":-1, "y":1},{"x":0.5, "y":1}]
+
+    zeros=parseToComplex(zeros)
+    poles=parseToComplex(poles)
+    normalized_frequency,magnitude_response,phase_response= filterResponse(zeros,poles)
+
     return jsonify({
         'magnitude':{
-            'x':x, 
-            'y':y
+            'x':normalized_frequency.tolist(), 
+            'y':magnitude_response.tolist()
         },
         'phase':{
-            'x':x,
-            'y':y
+            'x':normalized_frequency.tolist(),
+            'y':phase_response.tolist()
         }
     })
 

@@ -1,7 +1,8 @@
 function change_filter() {
+  console.log("hhh");
   $.ajax({
     type: "POST",
-    url: `/filter`,
+    url: `http://127.0.0.1:5000/filter`,
     contentType: false,
     cache: false,
     processData: false,
