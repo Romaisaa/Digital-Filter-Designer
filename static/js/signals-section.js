@@ -12,25 +12,6 @@ let cnt = 0;
 Plotly.newPlot("input-sig", [graph1Trace], get_signal_graph_layout());
 Plotly.newPlot("output-sig", [graph2Trace], get_signal_graph_layout());
 
-function get_z_transform() {
-  $.ajax({
-    type: "POST",
-    url: `/get_z_transform`,
-    contentType: false,
-    cache: false,
-    processData: false,
-    async: true,
-    success: function (res) {
-      if (outputSignal.length < 100) {
-        outputSignal.push(res.point);
-      } else {
-        outputSignal.shift();
-        outputSignal.push(res.point);
-      }
-    },
-  });
-}
-
 function draw_signals() {
   Plotly.extendTraces("input-sig", { y: [inputSignal] }, [0]);
   Plotly.extendTraces("output-sig", { y: [outputSignal] }, [0]);

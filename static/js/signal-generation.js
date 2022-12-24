@@ -42,7 +42,15 @@ function get_signal_data(point) {
     inputSignal.shift();
     inputSignal.push(point);
   }
-  get_z_transform();
+
+  // TODO: change point to the real output point
+
+  if (outputSignal.length < 100) {
+    outputSignal.push(point);
+  } else {
+    outputSignal.shift();
+    outputSignal.push(point);
+  }
   draw_signals();
 }
 

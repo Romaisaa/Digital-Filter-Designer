@@ -1,8 +1,8 @@
 var zeros, poles;
 var zerosCoordinates = [];
 var polesCoordinates = [];
-let importBtn = document.querySelector(".import-btn")
-let controls = document.querySelector(".controls")
+let importBtn = document.querySelector(".import-btn");
+let controls = document.querySelector(".controls");
 let zContainer = document.querySelector(".z-container");
 zContainer.addEventListener("click", (e) => {
   if (
@@ -29,25 +29,30 @@ document.addEventListener("click", (e) => {
 
 //*************************** fuctions ***************************//
 var circleMove;
-var xPoint,yPoint
+var xPoint, yPoint;
 function addZeros(e) {
   clearInterval(circleMove);
-  var xPoint = e.pageX - 30 ;
-  var yPoint = e.pageY - importBtn.clientHeight - controls.clientHeight - 70 ;
+  var xPoint = e.pageX - 30;
+  var yPoint = e.pageY - importBtn.clientHeight - controls.clientHeight - 70;
   let zero = document.createElement("div");
   zero.style.position = "absolute";
-  zero.style.left = xPoint+ "px";
-  zero.style.top = yPoint+ "px";
-  console.log(xPoint )
-  console.log([(xPoint - zContainer.clientWidth/2)/r, (zContainer.clientHeight/2 - yPoint)/r])
+  zero.style.left = xPoint + "px";
+  zero.style.top = yPoint + "px";
+
+  let point = {
+    x: (xPoint - zContainer.clientWidth / 2) / r,
+    y: (zContainer.clientHeight / 2 - yPoint) / r,
+  };
+
   if (mode == "Zeros") {
     zero.className = "item zero";
-    zerosCoordinates.push([e.pageX - 30, e.pageY - importBtn.clientHeight - controls.clientHeight - 70]);
+    zerosCoordinates.push(point);
   } else if (mode == "Poles") {
     zero.className = "item pole";
-    polesCoordinates.push([e.pageX - 30, e.pageY - importBtn.clientHeight - controls.clientHeight - 70]);
+    polesCoordinates.push(point);
   }
   zContainer.append(zero);
+  change_filter();
 }
 
 //*************************** move ***************************//
@@ -81,7 +86,6 @@ document.addEventListener("mousedown", function (e) {
       document.removeEventListener("mousemove", mouseMove);
     });
   }
-  change_filter();
 });
 
 function mouseMove(e) {
@@ -152,9 +156,9 @@ let zGraph = document.querySelector(".z-graph");
 var filter = [];
 document.querySelector(".test").style.left = zContainer.clientWidth / 2 + "px";
 document.querySelector(".test").style.top = zContainer.clientHeight / 2 + "px";
-var x = zContainer.clientWidth * 0.9 / 2;
-var y = zContainer.clientHeight * 0.9 / 2;
-var r = zContainer.clientWidth * 0.9 / 2;
+var x = (zContainer.clientWidth * 0.9) / 2;
+var y = (zContainer.clientHeight * 0.9) / 2;
+var r = (zContainer.clientWidth * 0.9) / 2;
 var a = 0;
 // function rotate(a) {
 //   var px = x + r * Math.cos(a); // <-- that's the maths you need
@@ -202,13 +206,13 @@ importSignalButton.addEventListener("click", () => {
 });
 
 //////////////////////////////////////////////////////
-let sigModes = document.getElementsByClassName("sig-mode")
+let sigModes = document.getElementsByClassName("sig-mode");
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("sig-mode")) {
-    for (i = 0; i < sigModes.length; i++){
-      console.log("ahhh")
-      sigModes[i].classList.remove("active-sig-mode")
+    for (i = 0; i < sigModes.length; i++) {
+      console.log("ahhh");
+      sigModes[i].classList.remove("active-sig-mode");
     }
-    e.target.classList.add("active-sig-mode")
+    e.target.classList.add("active-sig-mode");
   }
-})
+});

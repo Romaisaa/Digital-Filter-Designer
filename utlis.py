@@ -1,5 +1,6 @@
 import numpy as np
 import scipy
+from scipy import signal
 
 def parseToComplex(x_y_form):
     complex_form= [0]*len(x_y_form)
@@ -8,12 +9,12 @@ def parseToComplex(x_y_form):
     return complex_form
 
 def filterResponse(zeros, poles):
-    frequencies_values, response_complex = scipy.signal.freqz_zpk(zeros, poles, 1)
+    frequencies_values, response_complex = signal.freqz_zpk(zeros, poles, 1)
     normalized_frequency=frequencies_values/max(frequencies_values)
     magnitude_response = 20 * np.log10(np.abs(response_complex))
     phase_response = np.unwrap(np.angle(response_complex))
     return normalized_frequency, np.around(magnitude_response, decimals=3), np.around(phase_response, decimals=3)
 
 def differenceEqCoef(zeros,poles):
-    num_coef, den_coef = scipy.signal.zpk2tf(zeros, poles, 1)
-    return  num_coef, den_coef 
+    num_coef, den_coef = signal.zpk2tf(zeros, poles, 1)
+    return  num_coef, den_coef
