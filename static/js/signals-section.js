@@ -41,7 +41,6 @@ function draw_signals() {
       range: [cnt - 100, cnt],
     },
   };
-  // console.log(cnt);
 
   if (cnt > 100) {
     Plotly.relayout("input-sig", xMove);
@@ -52,7 +51,8 @@ function draw_signals() {
 function get_signal_graph_layout() {
   return {
     width: 460,
-    height: 200,
+    height: 180,
+    margin: { l: 45, r: 30, t: 30, b: 20 },
     xaxis: {
       title: {
         text: "time",
