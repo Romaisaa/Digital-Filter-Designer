@@ -43,7 +43,10 @@ function get_signal_data(point) {
     inputSignal.shift();
     inputSignal.push(point);
   }
-  apply_filter(inputSignal);
+
+  if (zerosCoordinates.length == 0 && polesCoordinates == 0)
+    outputSignal = inputSignal;
+  else apply_filter(inputSignal);
 
   draw_signals();
 }
