@@ -23,8 +23,7 @@ def update_filter():
     zeros = parseToComplex(body['zeros'])
     poles = parseToComplex(body['poles'])
     normalized_frequency, magnitude_response,phase_response = filterResponse(zeros, poles)
-    num_coeff,den_coeff=differenceEqCoef(zeros,poles)
-    return jsonify({
+    response= {
         'magnitude':{
             'x':normalized_frequency.tolist(), 
             'y':magnitude_response.tolist()
@@ -32,11 +31,30 @@ def update_filter():
         'phase':{
             'x':normalized_frequency.tolist(),
             'y':phase_response.tolist()
-        },'phase_preview':{
+        }
+    }
+    
+    if body["a_coef"]!=[]:
+        all_pass_phase_response= allPassFilter(body["a_coeff"])
+        phase_response=phase_response+all_pass_phase_response
+        response["phase"]={
             'x':normalized_frequency.tolist(),
             'y':phase_response.tolist()
-        },
-    })
+        }
+        all_pass_zeros,all_pass_poles= conjugate(body["a_coeff"])
+        zeros=[*zeros,*all_pass_zeros]
+        poles=[*poles,*all_pass_poles]
+
+        
+    if body["a_preview"]!=[]:
+        preview_phase_respose= allPassFilter(body["a_prev"])
+        preview_phase_respose=preview_phase_respose+phase_response
+        response["phase_preview"]={
+            'x':normalized_frequency.tolist(),
+            'y':preview_phase_respose.tolist()
+        }
+    num_coeff,den_coeff=differenceEqCoef(zeros,poles)
+    return jsonify(response)
 
 8
 @app.route('/apply-filter', methods=['POST'])
