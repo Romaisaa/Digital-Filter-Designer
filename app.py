@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, jsonify, request
-from utlis import parseToComplex, filterResponse
+from utlis import parseToComplex, filterResponse,differenceEqCoef
 app = Flask(__name__, template_folder="templates")
 
 
@@ -32,6 +32,22 @@ def update_filter():
             'y':phase_response.tolist()
         }
     })
+
+
+@app.route('/coefficients', methods=['POST'])
+def difference_coef():
+    # body = request.json
+    # zeros & poles form from unit circle
+    zeros=[{"x":0.5, "y":-1},{"x":-1, "y":0.5},{"x":-0.5, "y":1}]
+    poles=[{"x":-0.8, "y":-1},{"x":-1, "y":1},{"x":0.5, "y":1}]
+    zeros=parseToComplex(zeros)
+    poles=parseToComplex(poles)
+    num_coef, den_coef = differenceEqCoef(zeros,poles)
+    return jsonify({
+        'num_coef':num_coef.tolist(),
+        'den_coef':den_coef.tolist()
+    })
+
 
 
 @app.route('/get_z_transform', methods=['POST'])

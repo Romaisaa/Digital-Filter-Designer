@@ -1,5 +1,4 @@
 function change_filter() {
-  console.log("hhh");
   $.ajax({
     type: "POST",
     url: `http://127.0.0.1:5000/filter`,

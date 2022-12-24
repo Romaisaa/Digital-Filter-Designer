@@ -14,3 +14,6 @@ def filterResponse(zeros, poles):
     phase_response = np.unwrap(np.angle(response_complex))
     return normalized_frequency, np.around(magnitude_response, decimals=3), np.around(phase_response, decimals=3)
 
+def differenceEqCoef(zeros,poles):
+    num_coef, den_coef = scipy.signal.zpk2tf(zeros, poles, 1)
+    return  num_coef, den_coef 
