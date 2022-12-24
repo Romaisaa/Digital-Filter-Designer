@@ -8,6 +8,8 @@ function change_filter() {
     data: JSON.stringify({
       zeros: zerosCoordinates,
       poles: polesCoordinates,
+      a_coef: [],
+      a_preview: [],
     }),
     contentType: false,
     cache: false,
@@ -29,8 +31,6 @@ function change_filter() {
 
       Plotly.newPlot("fig-mag", [graph1Trace]);
       Plotly.newPlot("fig-phase", [graph2Trace]);
-
-      difference_equation(res.num_coeff, res.den_coeff);
     },
   });
 }
@@ -56,4 +56,8 @@ function difference_equation(num_coeff, den_coeff) {
       })
     );
   }
+}
+
+function get_coeff() {
+  return [numeratorCoeff, denominatorCoeff];
 }

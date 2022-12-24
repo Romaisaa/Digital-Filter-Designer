@@ -4,9 +4,12 @@ import numpy as np
 import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, jsonify, request
-from utlis import parseToComplex, filterResponse,differenceEqCoef
+from processing.processing import *
 app = Flask(__name__, template_folder="templates")
 
+
+num_coeff=[]
+den_coeff=[]
 
 @app.route('/', methods=['GET'])
 def index():
@@ -14,16 +17,13 @@ def index():
 
 @app.route('/filter', methods=['POST'])
 def update_filter():
+    global num_coeff
+    global den_coeff
     body = json.loads(request.data)
-
     zeros = parseToComplex(body['zeros'])
     poles = parseToComplex(body['poles'])
-
     normalized_frequency, magnitude_response,phase_response = filterResponse(zeros, poles)
-    num_coef, den_coef = differenceEqCoef(zeros,poles)
-
-
-
+    num_coeff,den_coeff=differenceEqCoef(zeros,poles)
     return jsonify({
         'magnitude':{
             'x':normalized_frequency.tolist(), 
@@ -32,15 +32,22 @@ def update_filter():
         'phase':{
             'x':normalized_frequency.tolist(),
             'y':phase_response.tolist()
+        },'phase_preview':{
+            'x':normalized_frequency.tolist(),
+            'y':phase_response.tolist()
         },
-        'num_coeff':{
-            'abs':np.abs(num_coef).tolist(),
-            'angle':np.angle(num_coef).tolist()
-        },
-        'den_coeff':{
-            'abs':np.abs(den_coef).tolist(),
-            'angle':np.angle(den_coef).tolist()
-        }
+    })
+
+8
+@app.route('/apply-filter', methods=['POST'])
+def apply_filter_on_signal():
+    global num_coeff
+    global den_coeff
+    body = json.loads(request.data)
+    input_signal = body['input_signal']
+    filtered_signal= apply_filter(num_coeff,den_coeff,input_signal)
+    return jsonify({
+        'filtered_signal':filtered_signal.tolist()
     })
 
 
