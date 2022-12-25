@@ -22,3 +22,21 @@ def differenceEqCoef(zeros,poles):
 def apply_filter(num_coef, den_coef, input_signal):
     filtered_signal=signal.lfilter(num_coef, den_coef, input_signal).real
     return filtered_signal
+
+def allPassFilter(a_coeffs):
+    if type(a_coeffs)!= list:
+        a_coeffs=[a_coeffs]
+    total_phase_response= np.zeros(512)
+    for a in a_coeffs:
+        _, response_complex= signal.freqz([-a, 1.0], [1.0, -a])
+        phase_response= np.unwrap(np.angle(response_complex))
+        total_phase_response= total_phase_response+np.round(phase_response,decimals=3)
+    return total_phase_response
+
+def conjugate(a_coeff):
+    zeros=[]
+    poles=[]
+    for a in a_coeff:
+        zeros.append(a)
+        poles.append((1/np.abs(a))*np.exp(1j*np.angle(a)))
+    return zeros, poles

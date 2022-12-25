@@ -1,7 +1,9 @@
-let numeratorCoeff = [],
-  denominatorCoeff = [];
+// let numeratorCoeff = [],
+//   denominatorCoeff = [];
 
 function change_filter() {
+  console.log(zerosCoordinates);
+  console.log(polesCoordinates);
   $.ajax({
     type: "POST",
     url: `http://127.0.0.1:5000/filter`,
@@ -35,29 +37,29 @@ function change_filter() {
   });
 }
 
-function difference_equation(num_coeff, den_coeff) {
-  numeratorCoeff = [];
-  denominatorCoeff = [];
+// function difference_equation(num_coeff, den_coeff) {
+//   numeratorCoeff = [];
+//   denominatorCoeff = [];
 
-  for (let i = 0; i < num_coeff.abs.length; i++) {
-    numeratorCoeff.push(
-      math.Complex.fromPolar({
-        r: num_coeff.abs[i],
-        phi: num_coeff.angle[i],
-      })
-    );
-  }
+//   for (let i = 0; i < num_coeff.abs.length; i++) {
+//     numeratorCoeff.push(
+//       math.Complex.fromPolar({
+//         r: num_coeff.abs[i],
+//         phi: num_coeff.angle[i],
+//       })
+//     );
+//   }
 
-  for (let i = 0; i < den_coeff.abs.length; i++) {
-    denominatorCoeff.push(
-      math.Complex.fromPolar({
-        r: den_coeff.abs[i],
-        phi: den_coeff.angle[i],
-      })
-    );
-  }
-}
+//   for (let i = 0; i < den_coeff.abs.length; i++) {
+//     denominatorCoeff.push(
+//       math.Complex.fromPolar({
+//         r: den_coeff.abs[i],
+//         phi: den_coeff.angle[i],
+//       })
+//     );
+//   }
+// }
 
-function get_coeff() {
-  return [numeratorCoeff, denominatorCoeff];
-}
+// function get_coeff() {
+//   return [numeratorCoeff, denominatorCoeff];
+// }
