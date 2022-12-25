@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="/static/css/main.css" />
+    <link rel="stylesheet" href="/static/css/correct-phase.css" />
     <link rel="stylesheet" href="/static/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -74,11 +75,119 @@
       <div class="convert option">Convert to pole</div>
       <div class="delete option">Delete</div>
     </div>
+    <div class="correct-phase">
+      <div class="cp-container">
+        <div class="main-part">
+          <div class="cp-phase-container">
+            <div class="cp-title cp-original-phase-title">Original Phase</div>
+            <div class="cp-phase original-phase">
+  
+            </div>
+          </div>
+          <div class="cp-control">
+            <form action="" method="post">
+              <div class="cp-title">Insert Your a</div>
+              <input type="text">
+              <button class="btn"> Add </button>
+            </form>
+            <div class="all-pass-filters">
+              <div class="apf-title">All Pass Filters</div>
+              <div class="hr"></div>
+              <div class="filters">
+                <div class="filter f1">
+                  <div class="f-icon">
+                    <i class="fa-solid fa-eye"></i>
+                  </div>
+                  <div class="vr"></div>
+                  <div class="f-title">Filter title 1</div>
+                </div>
+                <div class="filter f2">
+                  <div class="f-icon">
+                    <i class="fa-solid fa-eye"></i>
+                  </div>
+                  <div class="vr"></div>
+                  <div class="f-title">Filter title 2</div>
+                </div>
+                <div class="filter f3 selected-filter">
+                  <div class="f-icon">
+                    <i class="fa-solid fa-eye"></i>
+                  </div>
+                  <div class="vr"></div>
+                  <div class="f-title">Filter title 3</div>
+                </div>
+                <div class="filter f4">
+                  <div class="f-icon">
+                    <i class="fa-solid fa-eye"></i>
+                  </div>
+                  <div class="vr"></div>
+                  <div class="f-title">Filter title 4</div>
+                </div>
+                <div class="filter f5">
+                  <div class="f-icon">
+                    <i class="fa-solid fa-eye"></i>
+                  </div>
+                  <div class="vr"></div>
+                  <div class="f-title">Filter title 5</div>
+                </div>
+              </div>
+              <div class="delete-filter-btn">
+                <i class="fa-solid fa-trash"></i>
+              </div>
+            </div>
+          </div>
+          <div class="cp-phase-container">
+            <div class="cp-title cp-corrected-phase-title">Corrected Phase</div>
+            <div class="cp-phase corrected-phase">
+  
+            </div>
+          </div>
+        </div>
+        <div class="lower-part">
+          <div class="arrow l-arrow">
+            <i class="fa-solid fa-angle-left"></i>
+          </div>
+          <div class="cat-container">
+            <div class="catalog-img ex0">
+              <img src="/static/catalog/3.png" alt="">
+            </div>
+            <div class="catalog-img ex1">
+              <img src="/static/catalog/3.png" alt="">
+            </div>
+            <div class="catalog-img ex2">
+              <img src="/static/catalog/3.png" alt="">
+            </div>
+            <div class="catalog-img ex3 selected-catalog-img">
+              <img src="/static/catalog/4.png" alt="">
+            </div>
+            <div class="catalog-img ex4">
+              <img src="/static/catalog/3.png" alt="">
+            </div>
+            <div class="catalog-img ex5">
+              <img src="/static/catalog/3.png" alt="">
+            </div>
+            <div class="catalog-img ex6">
+              <img src="/static/catalog/3.png" alt="">
+            </div>
+            <div class="catalog-img ex7">
+              <img src="/static/catalog/3.png" alt="">
+            </div>
+            <div class="catalog-img ex8">
+              <img src="/static/catalog/3.png" alt="">
+            </div>
+          </div>
+          <div class="arrow r-arrow">
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <script src=https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.0/math.min.js></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
   <script src="/static/js/main.js"></script>
+  <script src="/static/js/correct-phase.js"></script>
+  <script src="/static/js/all.min.js"></script>
   <script src="/static/js/signal-generation.js"></script>
   <script src="/static/js/filter-section.js"></script>
   <script src="/static/js/signals-section.js"></script>
