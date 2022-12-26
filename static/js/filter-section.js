@@ -5,7 +5,8 @@ function change_filter() {
     data: JSON.stringify({
       zeros: zerosCoordinates,
       poles: polesCoordinates,
-      a_coef: a_coef,
+      a_coef: [],
+      a_preview: [],
     }),
     contentType: false,
     cache: false,

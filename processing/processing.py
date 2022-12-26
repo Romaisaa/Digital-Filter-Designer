@@ -40,3 +40,11 @@ def conjugate(a_coeff):
         zeros.append(a)
         poles.append((1/np.abs(a))*np.exp(1j*np.angle(a)))
     return zeros, poles
+
+def string_to_complex(a_coeff):
+    a_coeff_complex=[]
+    for string in a_coeff:
+        string = string.replace('i', 'j')
+        v = complex(string)
+        a_coeff_complex.append(v)
+    return a_coeff_complex
