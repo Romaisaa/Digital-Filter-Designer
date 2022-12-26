@@ -12,6 +12,7 @@ var a_layers = [];
 const correctPhase = document.getElementsByClassName("correct-phase")[0];
 openDialog.addEventListener("click", (e) => {
   e.preventDefault();
+  cpPage.style.display = "flex"
   console.log(correctPhase.classList);
   correctPhase.classList.remove("preview-mode");
 });
@@ -52,11 +53,26 @@ function updateList() {
   var container = document.getElementById("filters");
   container.innerHTML = "";
   for (var i = 0; i < a_layers.length; i++) {
-    container.innerHTML += `<div class="filter-dialog" id="${i}" ><div class="f-icon" id="f${1}"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title" id=text${i}> a= ${
+    container.innerHTML += `<div class="filter-dialog" id="${i}" ><div class="f-icon" id="f${i}"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title" id=text${i}> a= ${
       a_layers[i]
     }</div></div>`;
   }
 }
+
+let filterDialogs = document.getElementsByClassName("filter-dialog")
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("filter-dialog")) {
+    for (i = 0; i < filterDialogs.length; i++){
+      filterDialogs[i].classList.remove("selected-filter")
+    }
+    e.target.classList.add("selected-filter")
+  }
+  if (e.target.classList.contains("f-icon")) {
+    e.target.querySelector("svg").classList.toggle("hide-svg")
+    console.log(e.target.id[1])
+  }
+})
+
 
 var form_config = { button: null };
 $("#add_a").click(function () {
@@ -122,3 +138,12 @@ function enable_filter() {
   a_coef.push(new_a);
   change_filter();
 }
+
+
+////////////////// close tab //////////////////
+let cpPage = document.querySelector(".correct-phase")
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("close-tab")) {
+    cpPage.style.display = "none"
+  }
+})
