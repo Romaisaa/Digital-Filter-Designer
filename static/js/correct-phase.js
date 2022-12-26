@@ -7,6 +7,7 @@ var rimgPos = 1;
 var limgPos = 1;
 var a_coef = [];
 var a_preview = [];
+var a_layers = [];
 
 const correctPhase = document.getElementsByClassName("correct-phase")[0];
 openDialog.addEventListener("click", (e) => {
@@ -14,12 +15,6 @@ openDialog.addEventListener("click", (e) => {
   console.log(correctPhase.classList);
   correctPhase.classList.remove("preview-mode");
 });
-
-// window.addEventListener("click", function (e) {
-//   if (!openDialog.contains(e.target)) {
-//     correctPhase.classList.add("preview-mode");
-//   }
-// });
 
 var selected_a;
 updateList();
@@ -56,11 +51,9 @@ function scrollImgs(e) {
 function updateList() {
   var container = document.getElementById("filters");
   container.innerHTML = "";
-  for (var i = 0; i < a_coef.length; i++) {
-    container.innerHTML += `<div class="filter-dialog f${
-      i + 1
-    }" id="${i}" ><div class="f-icon"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title"> a= ${
-      a_coef[i]
+  for (var i = 0; i < a_layers.length; i++) {
+    container.innerHTML += `<div class="filter-dialog" id="${i}" ><div class="f-icon" id="f${1}"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title" id=text${i}> a= ${
+      a_layers[i]
     }</div></div>`;
   }
 }
@@ -89,6 +82,7 @@ function preview_a() {
 function add_a() {
   let a_input = document.getElementById("a_input").value;
   a_coef.push(a_input);
+  a_layers.push(a_input);
   updateList();
   change_filter();
   document.getElementById("a_input").value = "";
@@ -96,16 +90,35 @@ function add_a() {
 
 const a_group = document.getElementById("filters");
 const filtersGroup = (e) => {
-  console.log(e.target.id);
-  if (e.target.id !== "filters") selected_a = e.target.id;
+  if (e.target.id !== "filters") {
+    if (e.target.id.substring(0, 4) === "text") {
+      selected_a = e.target.id.substring(4, e.target.id.length);
+      selected_a = parseInt(selected_a);
+    } else selected_a = e.target.id;
+  }
 };
+
 a_group.addEventListener("click", filtersGroup);
 
 function delete_filter() {
-  a_coef.splice(selected_a, 1);
-  selected_a = "filters";
+  let index = a_coef.indexOf(selected_a);
+  a_coef.splice(index, 1);
+  a_layers.splice(selected_a, 1);
   updateList();
+  change_filter();
 }
 
 const delete_btn = document.getElementById("delete-filter");
 delete_btn.addEventListener("click", delete_filter);
+
+function disable_filter() {
+  let index = a_coef.indexOf(selected_a);
+  a_coef.splice(index, 1);
+  change_filter();
+}
+
+function enable_filter() {
+  let new_a = a_layers[selected_a];
+  a_coef.push(new_a);
+  change_filter();
+}
