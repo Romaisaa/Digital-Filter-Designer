@@ -12,7 +12,7 @@ var a_layers = [];
 const correctPhase = document.getElementsByClassName("correct-phase")[0];
 openDialog.addEventListener("click", (e) => {
   e.preventDefault();
-  cpPage.style.display = "flex"
+  cpPage.style.display = "flex";
   console.log(correctPhase.classList);
   correctPhase.classList.remove("preview-mode");
 });
@@ -53,26 +53,31 @@ function updateList() {
   var container = document.getElementById("filters");
   container.innerHTML = "";
   for (var i = 0; i < a_layers.length; i++) {
-    container.innerHTML += `<div class="filter-dialog" id="${i}" ><div class="f-icon" id="f${i}"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title" id=text${i}> a= ${
-      a_layers[i]
-    }</div></div>`;
+    container.innerHTML += `<div class="filter-dialog" id="${i}" ><div class="f-icon" id="f${i}"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title" id=text${i}> a= ${a_layers[i]}</div></div>`;
   }
 }
 
-let filterDialogs = document.getElementsByClassName("filter-dialog")
+let filterDialogs = document.getElementsByClassName("filter-dialog");
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("filter-dialog")) {
-    for (i = 0; i < filterDialogs.length; i++){
-      filterDialogs[i].classList.remove("selected-filter")
+    for (i = 0; i < filterDialogs.length; i++) {
+      filterDialogs[i].classList.remove("selected-filter");
     }
-    e.target.classList.add("selected-filter")
+    e.target.classList.add("selected-filter");
   }
   if (e.target.classList.contains("f-icon")) {
-    e.target.querySelector("svg").classList.toggle("hide-svg")
-    console.log(e.target.id[1])
-  }
-})
+    selected_a = e.target.id[1];
 
+    if (
+      e.target.querySelector("svg").classList.value === "svg-inline--fa fa-eye"
+    ) {
+      disable_filter();
+    } else {
+      enable_filter();
+    }
+    e.target.querySelector("svg").classList.toggle("hide-svg");
+  }
+});
 
 var form_config = { button: null };
 $("#add_a").click(function () {
@@ -97,6 +102,7 @@ function preview_a() {
 }
 function add_a() {
   let a_input = document.getElementById("a_input").value;
+  console.log(a_layers.find(a_input));
   a_coef.push(a_input);
   a_layers.push(a_input);
   updateList();
@@ -139,11 +145,10 @@ function enable_filter() {
   change_filter();
 }
 
-
 ////////////////// close tab //////////////////
-let cpPage = document.querySelector(".correct-phase")
+let cpPage = document.querySelector(".correct-phase");
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("close-tab")) {
-    cpPage.style.display = "none"
+    cpPage.style.display = "none";
   }
-})
+});
