@@ -125,7 +125,7 @@ button {
   position: relative;
 }
 
-.filter {
+.filter-dialog {
   display: flex;
   width: 100%;
   height: 5vh;
@@ -235,4 +235,8 @@ button {
 .btns {
   display: flex;
   flex-direction: row-reverse;
+}
+
+.preview-mode {
+  display: none;
 }
