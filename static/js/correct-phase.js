@@ -4,7 +4,7 @@ let catalogImgs = document.getElementsByClassName("catalog-img");
 var exIndex = 0;
 var rimgPos = 1;
 var limgPos = 1;
-var a_coef = [5, "4-2i"];
+var a_coef = [];
 updateList();
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("arrow")) {
@@ -38,6 +38,7 @@ function scrollImgs(e) {
 
 function updateList() {
   var container = document.getElementById("filters");
+  container.innerHTML = "";
   for (var i = 0; i < a_coef.length; i++) {
     container.innerHTML += `<div class="filter f${
       i + 1
@@ -47,20 +48,31 @@ function updateList() {
   }
 }
 
-function is_valid_complex(complex_string) {
-  let flag = true;
-  try {
-    var b = math.complex(complex_string);
-  } catch (err) {
-    flag = false;
-  }
-  return flag;
+var form_config = { button: null };
+
+$("#add_a").click(function () {
+  form_config.button = "add_a";
+});
+
+$("#preview_a").click(function () {
+  form_config.button = "preview_a";
+});
+
+$("#a_form").submit(function (e) {
+  e.preventDefault();
+  if (form_config.button === "add_a") add_a();
+  else if (form_config.button === "preview_a") preview_a();
+});
+
+function preview_a() {
+  let a_input = document.getElementById("a_input").value;
+  console.log("preview");
+  console.log(a_input);
 }
 
-function validate_complex() {
-  input = document.getElementById("a_input").value;
-  var regex = new RegExp(
-    "^(?=[iI.\\d+-])([+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?![iI.\\d]))?([+-]?(?:(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?)?[iI])?$"
-  );
-  return regex.test(input);
+function add_a() {
+  let a_input = document.getElementById("a_input").value;
+  a_coef.push(a_input);
+  updateList();
+  change_filter();
 }
