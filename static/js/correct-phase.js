@@ -29,10 +29,12 @@ document.addEventListener("click", (e) => {
     }
     if (e.target == lArrow) {
       catalogImgs[exIndex - 1].classList.add("selected-catalog-img");
+      console.log(`a = ${catalogImgs[exIndex - 1].classList[2]}`)
       scrollImgs(105);
     } else if (e.target == rArrow) {
       limgPos = 1;
       catalogImgs[parseInt(exIndex) + 1].classList.add("selected-catalog-img");
+      console.log(`a = ${catalogImgs[parseInt(exIndex) + 1].classList[2]}`)
       scrollImgs(-105);
     }
   }

@@ -202,6 +202,7 @@ button {
 }
 
 .f-title {
+  pointer-events: none;
   color: white;
   padding: 0 20px;
   line-height: 2.7;
