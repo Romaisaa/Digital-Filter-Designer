@@ -184,7 +184,7 @@ function mouseMove(e) {
 let menu = document.querySelector(".menu");
 var selected;
 document.addEventListener("contextmenu", (e) => {
-  e.preventDefault();
+  // e.preventDefault();
   if (
     e.target.classList.contains("zero") ||
     e.target.classList.contains("pole")

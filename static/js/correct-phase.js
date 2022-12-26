@@ -1,11 +1,26 @@
 let lArrow = document.querySelector(".l-arrow");
 let rArrow = document.querySelector(".r-arrow");
 let catalogImgs = document.getElementsByClassName("catalog-img");
+let openDialog = document.getElementsByClassName("phase-correct-btn")[0];
 var exIndex = 0;
 var rimgPos = 1;
 var limgPos = 1;
 var a_coef = [];
 var a_preview = [];
+
+const correctPhase = document.getElementsByClassName("correct-phase")[0];
+openDialog.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log(correctPhase.classList);
+  correctPhase.classList.remove("preview-mode");
+});
+
+// window.addEventListener("click", function (e) {
+//   if (!openDialog.contains(e.target)) {
+//     correctPhase.classList.add("preview-mode");
+//   }
+// });
+
 updateList();
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("arrow")) {
@@ -41,7 +56,7 @@ function updateList() {
   var container = document.getElementById("filters");
   container.innerHTML = "";
   for (var i = 0; i < a_coef.length; i++) {
-    container.innerHTML += `<div class="filter f${
+    container.innerHTML += `<div class="filter-dialog f${
       i + 1
     }"><div class="f-icon"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title"> a= ${
       a_coef[i]
