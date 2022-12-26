@@ -1,6 +1,5 @@
 import os
 import json
-import numpy as np
 import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, jsonify, request
@@ -34,7 +33,7 @@ def update_filter():
         }
     }
     
-    if body["a_coef"]!=[]:
+    if body["a_coeff"]!=[]:
         _,all_pass_phase_response= allPassFilter(body["a_coeff"])
         phase_response=phase_response+all_pass_phase_response
         response["phase"]={

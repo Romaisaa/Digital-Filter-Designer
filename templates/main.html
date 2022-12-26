@@ -81,15 +81,14 @@
       <div class="cp-container">
         <div class="main-part">
           <div class="cp-phase-container">
-            <div class="cp-title cp-original-phase-title">All-pass Phase</div>
+            <div class="cp-title cp-original-phase-title" id="all-pass-title">All-pass Phase</div>
             <div class="cp-phase original-phase" id="preview-phase">
-  
             </div>
           </div>
           <div class="cp-control">
               <form  id="a_form">
               <div class="cp-title">Insert Your a</div>
-              <input type="text" id="a_input" required pattern="[+-]?(((\d+\.\d*|\d*\.\d+|\d+)[+-])?((\d+\.\d*|\d*\.\d+|\d+)i|i(\d+\.\d*|\d*\.\d+|\d+)|i)|(\d+\.\d*|\d*\.\d+|\d+)?e\^(\([+-]?|[+-]?\()((\d+\.\d*|\d*\.\d+|\d+)i|i(\d+\.\d*|\d*\.\d+|\d+)|i)\))|[+-]?([0-9]*[.])?[0-9]+">
+              <input type="text" id="a_input" required pattern="[+-]?(((\d+\.\d*|\d*\.\d+|\d+)[+-])?((\d+\.\d*|\d*\.\d+|\d+)j|j(\d+\.\d*|\d*\.\d+|\d+)|j)|(\d+\.\d*|\d*\.\d+|\d+)?e\^(\([+-]?|[+-]?\()((\d+\.\d*|\d*\.\d+|\d+)j|j(\d+\.\d*|\d*\.\d+|\d+)|j)\))|[+-]?([0-9]*[.])?[0-9]+">
               <div class="btns">
               <button class="btn" id="add_a"> Add </button>
               <button class="btn" id="preview_a"> Preview </button>
@@ -99,7 +98,6 @@
               <div class="apf-title">All Pass Filters</div>
               <div class="hr"></div>
               <div class="filters" id="filters">
-                
               </div>
               <div class="delete-filter-btn">
                 <i class="fa-solid fa-trash"></i>

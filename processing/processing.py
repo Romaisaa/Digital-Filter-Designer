@@ -24,17 +24,22 @@ def apply_filter(num_coef, den_coef, input_signal):
     return filtered_signal
 
 def allPassFilter(a_coeffs):
+    a_coeffs=string_to_complex(a_coeffs)
     if type(a_coeffs)!= list:
         a_coeffs=[a_coeffs]
     total_phase_response= np.zeros(512)
     for a in a_coeffs:
         frequencies_values, response_complex= signal.freqz([-a, 1.0], [1.0, -a])
         normalized_frequency=frequencies_values/max(frequencies_values)
-        phase_response= np.unwrap(np.angle(response_complex))
+        if (a==1):
+            phase_response= np.zeros(512)
+        else:
+            phase_response= np.unwrap(np.angle(response_complex))
         total_phase_response= total_phase_response+np.round(phase_response,decimals=3)
     return normalized_frequency, total_phase_response
 
 def conjugate(a_coeff):
+    a_coeff=string_to_complex(a_coeff)
     zeros=[]
     poles=[]
     for a in a_coeff:

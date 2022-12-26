@@ -21,7 +21,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  display: none;
+  /* display: none; */
 }
 
 .cp-container {
@@ -58,7 +58,9 @@ body {
 
 .cp-title {
   padding-left: 2vw;
+  font-size: 1.4rem;
   margin-bottom: 1vh;
+  text-align: center;
 }
 
 .cp-control {

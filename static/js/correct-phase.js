@@ -5,6 +5,7 @@ var exIndex = 0;
 var rimgPos = 1;
 var limgPos = 1;
 var a_coef = [];
+var a_preview = [];
 updateList();
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("arrow")) {
@@ -67,7 +68,11 @@ $("#a_form").submit(function (e) {
 function preview_a() {
   let a_input = document.getElementById("a_input").value;
   console.log("preview");
-  console.log(a_input);
+  a_preview = [a_input];
+  document.getElementById(
+    "all-pass-title"
+  ).innerHTML = `All Pass Filter for a=${a_input}`;
+  preview_filter();
 }
 
 function add_a() {
@@ -75,4 +80,5 @@ function add_a() {
   a_coef.push(a_input);
   updateList();
   change_filter();
+  document.getElementById("a_input").value = "";
 }
