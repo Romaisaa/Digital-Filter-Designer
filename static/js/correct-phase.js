@@ -21,6 +21,7 @@ openDialog.addEventListener("click", (e) => {
 //   }
 // });
 
+var selected_a;
 updateList();
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("arrow")) {
@@ -58,28 +59,24 @@ function updateList() {
   for (var i = 0; i < a_coef.length; i++) {
     container.innerHTML += `<div class="filter-dialog f${
       i + 1
-    }"><div class="f-icon"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title"> a= ${
+    }" id="${i}" ><div class="f-icon"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title"> a= ${
       a_coef[i]
     }</div></div>`;
   }
 }
 
 var form_config = { button: null };
-
 $("#add_a").click(function () {
   form_config.button = "add_a";
 });
-
 $("#preview_a").click(function () {
   form_config.button = "preview_a";
 });
-
 $("#a_form").submit(function (e) {
   e.preventDefault();
   if (form_config.button === "add_a") add_a();
   else if (form_config.button === "preview_a") preview_a();
 });
-
 function preview_a() {
   let a_input = document.getElementById("a_input").value;
   console.log("preview");
@@ -89,7 +86,6 @@ function preview_a() {
   ).innerHTML = `All Pass Filter for a=${a_input}`;
   preview_filter();
 }
-
 function add_a() {
   let a_input = document.getElementById("a_input").value;
   a_coef.push(a_input);
@@ -97,3 +93,19 @@ function add_a() {
   change_filter();
   document.getElementById("a_input").value = "";
 }
+
+const a_group = document.getElementById("filters");
+const filtersGroup = (e) => {
+  console.log(e.target.id);
+  if (e.target.id !== "filters") selected_a = e.target.id;
+};
+a_group.addEventListener("click", filtersGroup);
+
+function delete_filter() {
+  a_coef.splice(selected_a, 1);
+  selected_a = "filters";
+  updateList();
+}
+
+const delete_btn = document.getElementById("delete-filter");
+delete_btn.addEventListener("click", delete_filter);

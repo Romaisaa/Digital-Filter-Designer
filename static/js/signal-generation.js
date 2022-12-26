@@ -74,31 +74,3 @@ function apply_filter(input_signal) {
     },
   });
 }
-
-// function filter(n, x, y) {
-//   coeff = get_coeff();
-//   let filter_order = Math.max(coeff[1].length, coeff[0].length);
-
-//   if (coeff[1].length != coeff[0].length)
-//     coeff = equateLength(coeff[0], coeff[1]);
-//   if (n < filter_order) return y[n];
-
-//   let y_n = math.multiply(coeff[0][0], x[n]);
-//   for (let m = 1; m < filter_order; m++) {
-//     let diff = math.add(
-//       math.multiply(coeff[0][m], x[n - m]),
-//       math.multiply(coeff[1][m], -y[n - m])
-//     );
-//     y_n = math.add(y_n, diff);
-//   }
-//   return math.re(y_n);
-// }
-
-// function equateLength(a, b) {
-//   max_length = Math.max(a.length, b.length);
-//   for (let i = 0; i < max_length; i++) {
-//     a[i] = i < a.length ? a[i] : 0;
-//     b[i] = i < b.length ? b[i] : 0;
-//   }
-//   return [a, b];
-// }
