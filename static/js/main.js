@@ -1,6 +1,12 @@
 var zeros, poles;
 var zerosCoordinates = [];
 var polesCoordinates = [];
+
+var realZeros = [];
+var realPoles = [];
+
+var dragMode = false;
+
 var selectedPoint;
 let importBtn = document.querySelector(".import-btn");
 let filterData = document.getElementById("filter_data");
@@ -28,11 +34,23 @@ document.getElementById("filterData").addEventListener("change", (e) => {
     }
     let file = files[0];
     let reader = new FileReader();
+    let data;
     reader.onload = (event) => {
-      let data = JSON.parse(event.target.result);
-      zerosCoordinates = data["zeros"];
-      polesCoordinates = data["poles"];
+      data = JSON.parse(event.target.result);
+      zeros = data["zeros"];
+      poles = data["poles"];
+
+      console.log(zeros);
+      console.log(poles);
+
+      for (let zero of zeros) {
+        draw_point(zero.x, zero.y, "Zeros");
+      }
+      for (let pole of poles) {
+        draw_point(pole.x, pole.y, "Poles");
+      }
     };
+
     reader.readAsText(file);
   } catch (err) {
     console.error(err);
@@ -43,8 +61,8 @@ exportBtn.addEventListener("click", (e) => {
   console.log("here");
   var a = document.createElement("a");
   let content = {
-    zeros: zerosCoordinates,
-    poles: polesCoordinates,
+    zeros: realZeros,
+    poles: realPoles,
   };
   var file = new Blob([JSON.stringify(content)], { type: "application/json" });
   a.href = URL.createObjectURL(file);
@@ -71,12 +89,12 @@ var xPoint, yPoint;
 function addZeros(e) {
   clearInterval(circleMove);
 
-  draw_point(e.pageX, e.pageY);
+  draw_point(e.pageX, e.pageY, mode);
 }
 
-function draw_point(xPoint, yPoint) {
-  var xPoint = xPoint - 30;
-  var yPoint = yPoint - importBtn.clientHeight - controls.clientHeight - 70;
+function draw_point(x, y, mode) {
+  var xPoint = x - 30;
+  var yPoint = y - importBtn.clientHeight - controls.clientHeight - 70;
 
   let zero = document.createElement("div");
   zero.style.position = "absolute";
@@ -91,9 +109,17 @@ function draw_point(xPoint, yPoint) {
   if (mode == "Zeros") {
     zero.className = "item zero";
     zerosCoordinates.push(point);
+    realZeros.push({
+      x: x,
+      y: y,
+    });
   } else if (mode == "Poles") {
     zero.className = "item pole";
     polesCoordinates.push(point);
+    realPoles.push({
+      x: x,
+      y: y,
+    });
   }
   zContainer.append(zero);
   change_filter();
@@ -128,14 +154,12 @@ document.addEventListener("mousedown", function (e) {
     document.addEventListener("mouseup", function (e) {
       e.target.classList.remove("drag");
 
-      if (selectedPoint) {
-        update_points(
-          selectedPoint,
-          calculateCoordinates(e.pageX, e.pageY),
-          "drag"
-        );
+      if (selectedPoint && dragMode) {
+        update_points(selectedPoint, e.pageX, e.pageY, "drag");
       }
-      selectedPoint = null;
+      if (dragMode) {
+        selectedPoint = null;
+      }
 
       document.removeEventListener("mousemove", mouseMove);
     });
@@ -160,7 +184,7 @@ function mouseMove(e) {
 let menu = document.querySelector(".menu");
 var selected;
 document.addEventListener("contextmenu", (e) => {
-  // e.preventDefault()
+  e.preventDefault();
   if (
     e.target.classList.contains("zero") ||
     e.target.classList.contains("pole")
@@ -197,12 +221,17 @@ convert.addEventListener("click", (e) => {
   } else {
     document.querySelector(".selected-pole").className = "zero";
   }
+  update_points(selectedPoint, 0, 0, "convert");
+  selectedPoint = null;
+  dragMode = false;
 });
 
 let deletebtn = document.querySelector(".delete");
 deletebtn.addEventListener("click", (e) => {
   document.querySelector(".selected").remove();
-  update_points(selectedPoint, {}, "drag");
+  update_points(selectedPoint, 0, 0, "delete");
+  selectedPoint = null;
+  dragMode = false;
 });
 
 ////////////////////////////////////////////////
@@ -281,7 +310,8 @@ function calculateCoordinates(xPosition, yPosition) {
   };
 }
 
-function update_points(oldPositions, newPositions, operation) {
+function update_points(oldPositions, pageX, pageY, operation) {
+  newPositions = calculateCoordinates(pageX, pageY);
   for (let i = 0; i < zerosCoordinates.length; i++) {
     if (
       Math.abs(zerosCoordinates[i].x - oldPositions.x) < 0.05 &&
@@ -289,8 +319,16 @@ function update_points(oldPositions, newPositions, operation) {
     ) {
       if (operation == "drag") {
         zerosCoordinates[i] = newPositions;
+        realPoles[i] = { x: pageX, y: pageY };
+      } else if (operation == "convert") {
+        polesCoordinates.push(zerosCoordinates[i]);
+        realPoles.push(realZeros[i]);
+
+        zerosCoordinates.splice(i, 1);
+        realZeros.splice(i, 1);
       } else {
-        delete zerosCoordinates[i];
+        zerosCoordinates.splice(i, 1);
+        realZeros.splice(i, 1);
       }
       change_filter();
       return;
@@ -304,8 +342,16 @@ function update_points(oldPositions, newPositions, operation) {
     ) {
       if (operation == "drag") {
         polesCoordinates[i] = newPositions;
+        realZeros[i] = { x: pageX, y: pageY };
+      } else if (operation == "convert") {
+        zerosCoordinates.push(polesCoordinates[i]);
+        realZeros.push(realPoles[i]);
+
+        polesCoordinates.splice(i, 1);
+        realPoles.splice(i, 1);
       } else {
-        delete polesCoordinates[i];
+        polesCoordinates.splice(i, 1);
+        realPoles.splice(i, 1);
       }
       change_filter();
       return;
