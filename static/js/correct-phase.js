@@ -91,11 +91,27 @@ $("#preview_a").click(function () {
 $("#a_form").submit(function (e) {
   e.preventDefault();
   if (form_config.button === "add_a") add_a();
-  else if (form_config.button === "preview_a") preview_a();
 });
-function preview_a() {
+
+let aValueField = document.getElementById("a_input");
+aValueField.addEventListener("input", () => {
   let a_input = document.getElementById("a_input").value;
-  console.log("preview");
+
+  const validation = new RegExp(
+    "[+-]?((d+.d*|d*.d+|d+)[+-])?((d+.d*|d*.d+|d+)j|j(d+.d*|d*.d+|d+)|j)|(d+.d*|d*.d+|d+)?e^(([+-]?|[+-]?()((d+.d*|d*.d+|d+)j|j(d+.d*|d*.d+|d+)|j)))|[+-]?([0-9]*[.])?[0-9]+",
+    "gm"
+  );
+
+  if (
+    validation.test(a_input) &&
+    a_input[a_input.length - 1] != "-" &&
+    a_input[a_input.length - 1] != "+"
+  ) {
+    preview_a(a_input);
+  }
+});
+
+function preview_a(a_input) {
   a_preview = [a_input];
   document.getElementById(
     "all-pass-title"
