@@ -79,56 +79,27 @@
       <div class="cp-container">
         <div class="main-part">
           <div class="cp-phase-container">
-            <div class="cp-title cp-original-phase-title">Original Phase</div>
-            <div class="cp-phase original-phase">
+            <div class="cp-title cp-original-phase-title">All-pass Phase</div>
+            <div class="cp-phase original-phase" id="preview-phase">
   
             </div>
           </div>
           <div class="cp-control">
-            <form action="" method="post">
+              <form  method="post" >
               <div class="cp-title">Insert Your a</div>
-              <input type="text">
-              <button class="btn"> Add </button>
+              <input type="text" id="a_input">
+              <div class="btns">
+              <button class="btn" id="add_a"> Add </button>
+              <button class="btn" id="preview_a"> Preview </button>
+              </div>
+
+
             </form>
             <div class="all-pass-filters">
               <div class="apf-title">All Pass Filters</div>
               <div class="hr"></div>
-              <div class="filters">
-                <div class="filter f1">
-                  <div class="f-icon">
-                    <i class="fa-solid fa-eye"></i>
-                  </div>
-                  <div class="vr"></div>
-                  <div class="f-title">Filter title 1</div>
-                </div>
-                <div class="filter f2">
-                  <div class="f-icon">
-                    <i class="fa-solid fa-eye"></i>
-                  </div>
-                  <div class="vr"></div>
-                  <div class="f-title">Filter title 2</div>
-                </div>
-                <div class="filter f3 selected-filter">
-                  <div class="f-icon">
-                    <i class="fa-solid fa-eye"></i>
-                  </div>
-                  <div class="vr"></div>
-                  <div class="f-title">Filter title 3</div>
-                </div>
-                <div class="filter f4">
-                  <div class="f-icon">
-                    <i class="fa-solid fa-eye"></i>
-                  </div>
-                  <div class="vr"></div>
-                  <div class="f-title">Filter title 4</div>
-                </div>
-                <div class="filter f5">
-                  <div class="f-icon">
-                    <i class="fa-solid fa-eye"></i>
-                  </div>
-                  <div class="vr"></div>
-                  <div class="f-title">Filter title 5</div>
-                </div>
+              <div class="filters" id="filters">
+                
               </div>
               <div class="delete-filter-btn">
                 <i class="fa-solid fa-trash"></i>
@@ -136,9 +107,8 @@
             </div>
           </div>
           <div class="cp-phase-container">
-            <div class="cp-title cp-corrected-phase-title">Corrected Phase</div>
-            <div class="cp-phase corrected-phase">
-  
+            <div class="cp-title cp-corrected-phase-title">Original Phase</div>
+            <div class="cp-phase corrected-phase" id="original-phase">
             </div>
           </div>
         </div>

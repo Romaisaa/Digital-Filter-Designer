@@ -234,29 +234,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-function is_valid_complex(complex_string) {
-  let flag = true;
-  try {
-    var b = math.complex(complex_string);
-  } catch (err) {
-    flag = false;
-  }
-  return flag;
-}
-
-function validate_complex(input) {
-  var regex = new RegExp(
-    "^(?=[iI.\\d+-])([+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?![iI.\\d]))?([+-]?(?:(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?)?[iI])?$"
-  );
-  if (regex.test(input)) {
-    alert("true");
-    return true;
-  } else {
-    alert("false");
-    return false;
-  }
-}
-
 function calculateCoordinates(xPosition, yPosition) {
   return {
     x: (xPosition - 30 - zContainer.clientWidth / 2) / r,

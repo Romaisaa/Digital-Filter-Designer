@@ -1,17 +1,11 @@
-// let numeratorCoeff = [],
-//   denominatorCoeff = [];
-
 function change_filter() {
-  console.log(zerosCoordinates);
-  console.log(polesCoordinates);
   $.ajax({
     type: "POST",
     url: `http://127.0.0.1:5000/filter`,
     data: JSON.stringify({
       zeros: zerosCoordinates,
       poles: polesCoordinates,
-      a_coef: [],
-      a_preview: [],
+      a_coef: a_coef,
     }),
     contentType: false,
     cache: false,
@@ -33,6 +27,7 @@ function change_filter() {
 
       Plotly.newPlot("fig-mag", [graph1Trace]);
       Plotly.newPlot("fig-phase", [graph2Trace]);
+      Plotly.newPlot("original-phase", [graph2Trace]);
     },
   });
 }
