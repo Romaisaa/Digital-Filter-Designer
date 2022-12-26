@@ -28,10 +28,11 @@ def allPassFilter(a_coeffs):
         a_coeffs=[a_coeffs]
     total_phase_response= np.zeros(512)
     for a in a_coeffs:
-        _, response_complex= signal.freqz([-a, 1.0], [1.0, -a])
+        frequencies_values, response_complex= signal.freqz([-a, 1.0], [1.0, -a])
+        normalized_frequency=frequencies_values/max(frequencies_values)
         phase_response= np.unwrap(np.angle(response_complex))
         total_phase_response= total_phase_response+np.round(phase_response,decimals=3)
-    return total_phase_response
+    return normalized_frequency, total_phase_response
 
 def conjugate(a_coeff):
     zeros=[]

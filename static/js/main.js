@@ -3,8 +3,10 @@ var zerosCoordinates = [];
 var polesCoordinates = [];
 var selectedPoint;
 let importBtn = document.querySelector(".import-btn");
+let filterData = document.getElementById("filter_data");
 let controls = document.querySelector(".controls");
 let zContainer = document.querySelector(".z-container");
+let exportBtn = document.querySelector(".export-btn");
 zContainer.addEventListener("click", (e) => {
   if (
     !e.target.classList.contains("zero") &&
@@ -13,7 +15,42 @@ zContainer.addEventListener("click", (e) => {
     addZeros(e);
   }
 });
+importBtn.addEventListener("click", (e) => {
+  document.getElementById("filterData").click();
+});
 
+document.getElementById("filterData").addEventListener("change", (e) => {
+  try {
+    let files = e.target.files;
+    if (!files.length) {
+      alert("No file selected!");
+      return;
+    }
+    let file = files[0];
+    let reader = new FileReader();
+    reader.onload = (event) => {
+      let data = JSON.parse(event.target.result);
+      zerosCoordinates = data["zeros"];
+      polesCoordinates = data["poles"];
+    };
+    reader.readAsText(file);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+exportBtn.addEventListener("click", (e) => {
+  console.log("here");
+  var a = document.createElement("a");
+  let content = {
+    zeros: zerosCoordinates,
+    poles: polesCoordinates,
+  };
+  var file = new Blob([JSON.stringify(content)], { type: "application/json" });
+  a.href = URL.createObjectURL(file);
+  a.download = "filter.json";
+  a.click();
+});
 //*************************** SelectMode ***************************//
 let zerosPoles = document.getElementsByClassName("z-p");
 var mode = "Zeros";
