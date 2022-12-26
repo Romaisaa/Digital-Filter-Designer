@@ -35,7 +35,7 @@ def update_filter():
     }
     
     if body["a_coef"]!=[]:
-        all_pass_phase_response= allPassFilter(body["a_coeff"])
+        _,all_pass_phase_response= allPassFilter(body["a_coeff"])
         phase_response=phase_response+all_pass_phase_response
         response["phase"]={
             'x':normalized_frequency.tolist(),
@@ -45,14 +45,6 @@ def update_filter():
         zeros=[*zeros,*all_pass_zeros]
         poles=[*poles,*all_pass_poles]
 
-        
-    if body["a_preview"]!=[]:
-        preview_phase_respose= allPassFilter(body["a_prev"])
-        preview_phase_respose=preview_phase_respose+phase_response
-        response["phase_preview"]={
-            'x':normalized_frequency.tolist(),
-            'y':preview_phase_respose.tolist()
-        }
     num_coeff,den_coeff=differenceEqCoef(zeros,poles)
     return jsonify(response)
 
@@ -67,6 +59,16 @@ def apply_filter_on_signal():
     return jsonify({
         'filtered_signal':filtered_signal.tolist()
     })
+
+@app.route("/preview_a",methods=["POST"])
+def preview_a_coef():
+    body = json.loads(request.data)
+    normalized_frequency,preview_phase_respose= allPassFilter(body["a_prev"])
+    response={
+        'x':normalized_frequency.tolist(),
+        'y':preview_phase_respose.tolist()
+    }
+    return jsonify(response),200
 
 
 @app.route('/import-csv', methods=['POST'])
