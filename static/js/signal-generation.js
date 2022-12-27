@@ -1,16 +1,18 @@
 inputSignal = [];
 outputSignal = [];
 importedSignal = [];
+lst = [];
 generateMode = true;
 generateIndex = 0;
-let counter = 0;
+let counter = 0,
+  samplingCounter = 0,
+  timeCounter = 0;
 
 const signalPad = document.getElementById("generate-sig-pad");
 signalPad.addEventListener("mousemove", (event) => {
   event.preventDefault();
-  get_signal_data(event.pageX);
 
-  counter++;
+  get_signal_data(event.clientX);
 });
 
 const uploadSignal = document.getElementById("file-upload");
@@ -37,12 +39,21 @@ function read_csv() {
 }
 
 function get_signal_data(point) {
+  samplingCounter++;
+  if (samplingCounter % 5 != 0) {
+    return;
+  }
+  console.log(point);
   if (inputSignal.length < 100) {
     inputSignal.push(point);
+    lst.push(timeCounter);
   } else {
     inputSignal.shift();
     inputSignal.push(point);
+    lst.shift();
+    lst.push(timeCounter);
   }
+  timeCounter++;
 
   if (zerosCoordinates.length == 0 && polesCoordinates == 0)
     outputSignal = inputSignal;

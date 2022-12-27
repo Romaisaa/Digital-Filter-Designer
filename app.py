@@ -54,6 +54,7 @@ def apply_filter_on_signal():
     global den_coeff
     body = json.loads(request.data)
     input_signal = body['input_signal']
+    print(input_signal)
     filtered_signal= apply_filter(num_coeff,den_coeff,input_signal)
     return jsonify({
         'filtered_signal':filtered_signal.tolist()
