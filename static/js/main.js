@@ -294,8 +294,8 @@ function update_points(oldPositions, pageX, pageY, operation) {
   newPositions = calculateCoordinates(pageX, pageY);
   for (let i = 0; i < zerosCoordinates.length; i++) {
     if (
-      Math.abs(zerosCoordinates[i].x - oldPositions.x) < 0.05 &&
-      Math.abs(zerosCoordinates[i].y - oldPositions.y) < 0.05
+      Math.abs(zerosCoordinates[i].x - oldPositions.x) < 0.1 &&
+      Math.abs(zerosCoordinates[i].y - oldPositions.y) < 0.1
     ) {
       if (operation == "drag") {
         zerosCoordinates[i] = newPositions;
@@ -318,8 +318,8 @@ function update_points(oldPositions, pageX, pageY, operation) {
 
   for (let i = 0; i < polesCoordinates.length; i++) {
     if (
-      Math.abs(polesCoordinates[i].x - oldPositions.x) < 0.05 &&
-      Math.abs(polesCoordinates[i].y - oldPositions.y) < 0.05
+      Math.abs(polesCoordinates[i].x - oldPositions.x) < 0.1 &&
+      Math.abs(polesCoordinates[i].y - oldPositions.y) < 0.1
     ) {
       if (operation == "drag") {
         polesCoordinates[i] = newPositions;

@@ -161,8 +161,17 @@ body {
   border-radius: 50%;
   cursor: move;
   transform: translate(-50%, -50%);
-  border: 3px solid darkblue;
-  background-color: var(--white);
+  /* border: 3px solid darkblue;
+  background-color: var(--white); */
+}
+
+.pole::after {
+  content: "X";
+  text-align: center;
+  color: darkblue;
+  font-size: 25px;
+  font-weight: bold;
+  pointer-events: none;
 }
 
 .menu {
