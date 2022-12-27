@@ -25,8 +25,16 @@ function change_filter() {
         mode: "lines",
       };
 
-      Plotly.newPlot("fig-mag", [graph1Trace]);
-      Plotly.newPlot("fig-phase", [graph2Trace]);
+      Plotly.newPlot(
+        "fig-mag",
+        [graph1Trace],
+        get_middle_layout("Magnitude Response")
+      );
+      Plotly.newPlot(
+        "fig-phase",
+        [graph2Trace],
+        get_middle_layout("Phase Response")
+      );
       Plotly.newPlot("original-phase", [graph2Trace]);
     },
   });
@@ -53,4 +61,16 @@ function preview_filter() {
       Plotly.newPlot("preview-phase", [graph1Trace]);
     },
   });
+}
+
+function get_middle_layout(title) {
+  return {
+    title: {
+      text: title,
+      font: {
+        family: "Roboto",
+        size: 20,
+      },
+    },
+  };
 }

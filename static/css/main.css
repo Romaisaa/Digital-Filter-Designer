@@ -271,8 +271,8 @@ body {
   margin-left: auto;
 }
 
-.active-sig-mode{
-    background-color: var(--darkest-color) !important;
+.active-sig-mode {
+  background-color: var(--darkest-color) !important;
 }
 
 .generate-sig {
@@ -299,8 +299,8 @@ body {
 
 .generate-sig-title,
 .import-sig-title {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .upload-form {
@@ -313,6 +313,6 @@ body {
   display: none;
 }
 
-.sig-mode:hover{
-    background-color: var(--dark-grey);
+.sig-mode:hover {
+  background-color: var(--dark-grey);
 }

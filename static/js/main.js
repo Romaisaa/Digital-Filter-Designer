@@ -39,9 +39,12 @@ document.getElementById("filterData").addEventListener("change", (e) => {
       data = JSON.parse(event.target.result);
       zeros = data["zeros"];
       poles = data["poles"];
+      a_coef = data["all_pass_filter"];
+      a_layers = [...a_coef];
+      updateList();
 
-      console.log(zeros);
-      console.log(poles);
+      console.log(a_coef);
+      console.log(a_layers);
 
       for (let zero of zeros) {
         draw_point(zero.x, zero.y, "Zeros");
@@ -58,11 +61,11 @@ document.getElementById("filterData").addEventListener("change", (e) => {
 });
 
 exportBtn.addEventListener("click", (e) => {
-  console.log("here");
   var a = document.createElement("a");
   let content = {
     zeros: realZeros,
     poles: realPoles,
+    all_pass_filter: a_coef,
   };
   var file = new Blob([JSON.stringify(content)], { type: "application/json" });
   a.href = URL.createObjectURL(file);
