@@ -117,9 +117,7 @@ function draw_point(x, y, mode) {
     });
   } else if (mode == "Poles") {
     zero.className = "item pole";
-    let poleIcon = document.createElement("i")
-    poleIcon.className = "fa-solid fa-xmark"
-    zero.appendChild(poleIcon)
+
     polesCoordinates.push(point);
     realPoles.push({
       x: x,
@@ -209,7 +207,7 @@ document.addEventListener("contextmenu", (e) => {
     if (e.target.classList.contains("zero")) {
       menu.querySelector(".option").innerHTML = "Convert to pole";
       e.target.classList.add("selected-zero");
-      
+
       e.target.classList.add("selected");
       selected = "zero";
     } else {
@@ -223,18 +221,17 @@ document.addEventListener("contextmenu", (e) => {
 
 let convert = document.querySelector(".convert");
 convert.addEventListener("click", (e) => {
-  
   if (selected == "zero") {
-    let poleIcon = document.createElement("i")
-      poleIcon.className = "fa-solid fa-xmark"
-      document.querySelector(".selected").appendChild(poleIcon)
-      document.querySelector(".selected-zero").className = "pole";
+    let poleIcon = document.createElement("i");
+    poleIcon.className = "fa-solid fa-xmark";
+    document.querySelector(".selected").appendChild(poleIcon);
+    document.querySelector(".selected-zero").className = "pole";
   } else {
     document.querySelector(".selected-pole").className = "zero";
-    let zeros = document.getElementsByClassName("zero")
-    for (i = 0; i < zeros.length; i++){
+    let zeros = document.getElementsByClassName("zero");
+    for (i = 0; i < zeros.length; i++) {
       if (zeros[i].querySelector("svg")) {
-        zeros[i].querySelector("svg").remove()
+        zeros[i].querySelector("svg").remove();
       }
     }
   }
