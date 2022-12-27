@@ -13,20 +13,26 @@ Plotly.newPlot("input-sig", [graph1Trace], get_signal_graph_layout());
 Plotly.newPlot("output-sig", [graph2Trace], get_signal_graph_layout());
 
 function draw_signals() {
-  Plotly.extendTraces("input-sig", { y: [inputSignal] }, [0]);
-  Plotly.extendTraces("output-sig", { y: [outputSignal] }, [0]);
+  Plotly.extendTraces(
+    "input-sig",
+    { y: [[inputSignal[inputSignal.length - 1]]] },
+    [0]
+  );
+  Plotly.extendTraces(
+    "output-sig",
+    { y: [[outputSignal[outputSignal.length - 1]]] },
+    [0]
+  );
 
   cnt++;
   let xMove = {
     xaxis: {
-      range: [cnt - 100, cnt],
+      range: [cnt - 50, cnt],
     },
   };
 
-  if (cnt > 100) {
-    Plotly.relayout("input-sig", xMove);
-    Plotly.relayout("output-sig", xMove);
-  }
+  Plotly.relayout("input-sig", xMove);
+  Plotly.relayout("output-sig", xMove);
 }
 
 function get_signal_graph_layout() {
