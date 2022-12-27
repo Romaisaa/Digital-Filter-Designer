@@ -134,6 +134,12 @@ function preview_a(a_input) {
 }
 function add_a() {
   let a_input = document.getElementById("a_input").value;
+  let index = a_layers.indexOf(a_input);
+  if (index > -1) {
+    document.getElementById("a_input").value = "";
+
+    return;
+  }
   a_coef.push(a_input);
   a_layers.push(a_input);
   updateList();
@@ -143,13 +149,14 @@ function add_a() {
 
 const a_group = document.getElementById("filters");
 const filtersGroup = (e) => {
+  console.log(e.target.id);
   if (e.target.id !== "filters" && e.target.id.substring(0, 1) !== "f") {
     if (e.target.id.substring(0, 4) === "text") {
       selected_a = e.target.id.substring(4, e.target.id.length);
       selected_a = parseInt(selected_a);
     } else selected_a = e.target.id;
+    preview_a(a_layers[selected_a]);
   }
-  preview_a(a_layers[selected_a]);
 };
 
 a_group.addEventListener("click", filtersGroup);
