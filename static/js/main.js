@@ -4,8 +4,7 @@ var polesCoordinates = [];
 
 var realZeros = [];
 var realPoles = [];
-
-var dragMode = false;
+var nextClick = true;
 
 var selectedPoint;
 let importBtn = document.querySelector(".import-btn");
@@ -118,9 +117,7 @@ function draw_point(x, y, mode) {
     });
   } else if (mode == "Poles") {
     zero.className = "item pole";
-    let poleIcon = document.createElement("i")
-    poleIcon.className = "fa-solid fa-xmark"
-    zero.appendChild(poleIcon)
+
     polesCoordinates.push(point);
     realPoles.push({
       x: x,
@@ -158,16 +155,14 @@ document.addEventListener("mousedown", function (e) {
     document.addEventListener("mousemove", mouseMove);
 
     document.addEventListener("mouseup", function (e) {
-      e.target.classList.remove("drag");
+      if ((e.which != 3, nextClick)) {
+        e.target.classList.remove("drag");
 
-      if (selectedPoint && dragMode) {
-        update_points(selectedPoint, e.pageX, e.pageY, "drag");
+        if (selectedPoint) {
+          update_points(selectedPoint, e.pageX, e.pageY, "drag");
+        }
+        document.removeEventListener("mousemove", mouseMove);
       }
-      if (dragMode) {
-        selectedPoint = null;
-      }
-
-      document.removeEventListener("mousemove", mouseMove);
     });
   }
 });
@@ -190,7 +185,7 @@ function mouseMove(e) {
 let menu = document.querySelector(".menu");
 var selected;
 document.addEventListener("contextmenu", (e) => {
-  // e.preventDefault();
+  e.preventDefault();
   if (
     e.target.classList.contains("zero") ||
     e.target.classList.contains("pole")
@@ -206,9 +201,13 @@ document.addEventListener("contextmenu", (e) => {
     menu.style.left = x;
     menu.style.top = y;
     menu.classList.toggle("menu-show");
+    if (menu.classList.contains("menu-show")) {
+      nextClick = false;
+    }
     if (e.target.classList.contains("zero")) {
       menu.querySelector(".option").innerHTML = "Convert to pole";
       e.target.classList.add("selected-zero");
+
       e.target.classList.add("selected");
       selected = "zero";
     } else {
@@ -223,21 +222,26 @@ document.addEventListener("contextmenu", (e) => {
 let convert = document.querySelector(".convert");
 convert.addEventListener("click", (e) => {
   if (selected == "zero") {
+    let poleIcon = document.createElement("i");
+    poleIcon.className = "fa-solid fa-xmark";
+    document.querySelector(".selected").appendChild(poleIcon);
     document.querySelector(".selected-zero").className = "pole";
   } else {
     document.querySelector(".selected-pole").className = "zero";
+    let zeros = document.getElementsByClassName("zero");
+    for (i = 0; i < zeros.length; i++) {
+      if (zeros[i].querySelector("svg")) {
+        zeros[i].querySelector("svg").remove();
+      }
+    }
   }
   update_points(selectedPoint, 0, 0, "convert");
-  selectedPoint = null;
-  dragMode = false;
 });
 
 let deletebtn = document.querySelector(".delete");
 deletebtn.addEventListener("click", (e) => {
   document.querySelector(".selected").remove();
   update_points(selectedPoint, 0, 0, "delete");
-  selectedPoint = null;
-  dragMode = false;
 });
 
 ////////////////////////////////////////////////
@@ -250,27 +254,6 @@ var x = (zContainer.clientWidth * 0.9) / 2;
 var y = (zContainer.clientHeight * 0.9) / 2;
 var r = (zContainer.clientWidth * 0.9) / 2;
 var a = 0;
-// function rotate(a) {
-//   var px = x + r * Math.cos(a); // <-- that's the maths you need
-//   var py = y + r * Math.sin(a);
-
-//   document.querySelector(".circle-test").style.left = px + "px";
-//   document.querySelector(".circle-test").style.top = py + "px";
-//   if (zerosCoordinates.length != 0) {
-//     if (Math.round(a) == 0) {
-//       standardization = Math.sqrt((px - x) ** 2 + (py - y) ** 2);
-//     }
-
-//     filter.push(
-//       Math.sqrt(
-//         (px - zerosCoordinates[0][0]) ** 2 + (py - zerosCoordinates[0][1]) ** 2
-//       ) / standardization
-//     );
-//   }
-//   if (-a - Math.PI > -0.001) {
-//     clearInterval(circleMove);
-//   }
-// }
 
 /////////////////////////////////////
 const generateSignalButton = document.getElementById("generate-sig");
@@ -337,6 +320,7 @@ function update_points(oldPositions, pageX, pageY, operation) {
         realZeros.splice(i, 1);
       }
       change_filter();
+      nextClick = true;
       return;
     }
   }
@@ -360,6 +344,7 @@ function update_points(oldPositions, pageX, pageY, operation) {
         realPoles.splice(i, 1);
       }
       change_filter();
+      nextClick = true;
       return;
     }
   }
