@@ -24,18 +24,29 @@ function change_filter() {
         marker: { color: "#00051e" },
         mode: "lines",
       };
+      layout = {
+        xaxis: {
+          tickvals: [0.25, 0.5, 0.75, 1],
+          ticktext: ["PI/4", "PI/2", "3PI/4", "PI"],
+        },
+        yaxis: {
+          ticksuffix: `&nbsp; db`,
+        },
+      };
 
       Plotly.newPlot(
         "fig-mag",
         [graph1Trace],
-        get_middle_layout("Magnitude Response")
+        get_middle_layout("Magnitude Response"),
+        layout
       );
       Plotly.newPlot(
         "fig-phase",
         [graph2Trace],
-        get_middle_layout("Phase Response")
+        get_middle_layout("Phase Response"),
+        layout
       );
-      Plotly.newPlot("original-phase", [graph2Trace]);
+      Plotly.newPlot("original-phase", [graph2Trace], layout);
     },
   });
 }
@@ -71,6 +82,13 @@ function get_middle_layout(title) {
         family: "Roboto",
         size: 20,
       },
+    },
+    xaxis: {
+      tickvals: [0.25, 0.5, 0.75, 1],
+      ticktext: ["PI/4", "PI/2", "3PI/4", "PI"],
+    },
+    yaxis: {
+      ticksuffix: `&nbsp; db`,
     },
   };
 }
