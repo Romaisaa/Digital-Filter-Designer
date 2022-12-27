@@ -222,18 +222,9 @@ document.addEventListener("contextmenu", (e) => {
 let convert = document.querySelector(".convert");
 convert.addEventListener("click", (e) => {
   if (selected == "zero") {
-    let poleIcon = document.createElement("i");
-    poleIcon.className = "fa-solid fa-xmark";
-    document.querySelector(".selected").appendChild(poleIcon);
     document.querySelector(".selected-zero").className = "pole";
   } else {
     document.querySelector(".selected-pole").className = "zero";
-    let zeros = document.getElementsByClassName("zero");
-    for (i = 0; i < zeros.length; i++) {
-      if (zeros[i].querySelector("svg")) {
-        zeros[i].querySelector("svg").remove();
-      }
-    }
   }
   update_points(selectedPoint, 0, 0, "convert");
 });
