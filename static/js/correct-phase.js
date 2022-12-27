@@ -66,7 +66,10 @@ function updateList() {
   var container = document.getElementById("filters");
   container.innerHTML = "";
   for (var i = 0; i < a_layers.length; i++) {
-    container.innerHTML += `<div class="filter-dialog" id="${i}" ><div class="f-icon" id="f${i}"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title" id=text${i}> a= ${a_layers[i]}</div></div>`;
+    if (a_coef.indexOf(a_layers[i]) > -1)
+      container.innerHTML += `<div class="filter-dialog" id="${i}" ><div class="f-icon" id="f${i}"><i class="fa-solid fa-eye"></i></div><div class="vr"></div><div class="f-title" id=text${i}> a= ${a_layers[i]}</div></div>`;
+    else
+      container.innerHTML += `<div class="filter-dialog" id="${i}" ><div class="f-icon" id="f${i}"><i class="fa-solid fa-eye hide-svg"></i></div><div class="vr"></div><div class="f-title" id=text${i}> a= ${a_layers[i]}</div></div>`;
   }
 }
 
@@ -140,19 +143,20 @@ function add_a() {
 
 const a_group = document.getElementById("filters");
 const filtersGroup = (e) => {
-  if (e.target.id !== "filters") {
+  if (e.target.id !== "filters" && e.target.id.substring(0, 1) !== "f") {
     if (e.target.id.substring(0, 4) === "text") {
       selected_a = e.target.id.substring(4, e.target.id.length);
       selected_a = parseInt(selected_a);
     } else selected_a = e.target.id;
   }
+  preview_a(a_layers[selected_a]);
 };
 
 a_group.addEventListener("click", filtersGroup);
 
 function delete_filter() {
-  let index = a_coef.indexOf(selected_a);
-  a_coef.splice(index, 1);
+  let index = a_coef.indexOf(a_layers[selected_a]);
+  if (index > -1) a_coef.splice(index, 1);
   a_layers.splice(selected_a, 1);
   updateList();
   change_filter();
