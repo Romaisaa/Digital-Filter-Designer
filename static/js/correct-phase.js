@@ -15,6 +15,7 @@ openDialog.addEventListener("click", (e) => {
   cpPage.style.display = "flex";
   console.log(correctPhase.classList);
   correctPhase.classList.remove("preview-mode");
+  change_filter();
 });
 
 var selected_a;
@@ -29,12 +30,22 @@ document.addEventListener("click", (e) => {
     }
     if (e.target == lArrow) {
       catalogImgs[exIndex - 1].classList.add("selected-catalog-img");
-      console.log(`a = ${catalogImgs[exIndex - 1].classList[2]}`)
+      console.log(`a = ${catalogImgs[exIndex - 1].classList[2]}`);
+
+      document.getElementById("a_input").value =
+        catalogImgs[exIndex - 1].classList[2];
+      preview_a(catalogImgs[exIndex - 1].classList[2]);
+
       scrollImgs(105);
     } else if (e.target == rArrow) {
       limgPos = 1;
       catalogImgs[parseInt(exIndex) + 1].classList.add("selected-catalog-img");
-      console.log(`a = ${catalogImgs[parseInt(exIndex) + 1].classList[2]}`)
+      console.log(`a = ${catalogImgs[parseInt(exIndex) + 1].classList[2]}`);
+
+      document.getElementById("a_input").value =
+        catalogImgs[parseInt(exIndex) + 1].classList[2];
+      preview_a(catalogImgs[parseInt(exIndex) + 1].classList[2]);
+
       scrollImgs(-105);
     }
   }
@@ -120,7 +131,6 @@ function preview_a(a_input) {
 }
 function add_a() {
   let a_input = document.getElementById("a_input").value;
-  console.log(a_layers.find(a_input));
   a_coef.push(a_input);
   a_layers.push(a_input);
   updateList();
@@ -152,8 +162,8 @@ const delete_btn = document.getElementById("delete-filter");
 delete_btn.addEventListener("click", delete_filter);
 
 function disable_filter() {
-  let index = a_coef.indexOf(selected_a);
-  a_coef.splice(index, 1);
+  let index = a_coef.indexOf(a_layers[selected_a]);
+  if (index > -1) a_coef.splice(index, 1);
   change_filter();
 }
 
