@@ -118,6 +118,9 @@ function draw_point(x, y, mode) {
     });
   } else if (mode == "Poles") {
     zero.className = "item pole";
+    let poleIcon = document.createElement("i")
+    poleIcon.className = "fa-solid fa-xmark"
+    zero.appendChild(poleIcon)
     polesCoordinates.push(point);
     realPoles.push({
       x: x,
