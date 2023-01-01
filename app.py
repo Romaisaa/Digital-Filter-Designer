@@ -3,12 +3,11 @@ import json
 import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, jsonify, request
-from processing.processing import *
+from processing.filter import Filter
 app = Flask(__name__, template_folder="templates")
 
 
-num_coeff=[]
-den_coeff=[]
+filter=Filter()
 
 @app.route('/', methods=['GET'])
 def index():
@@ -16,12 +15,14 @@ def index():
 
 @app.route('/filter', methods=['POST'])
 def update_filter():
-    global num_coeff
-    global den_coeff
+    global filter
     body = json.loads(request.data)
-    zeros = parseToComplex(body['zeros'])
-    poles = parseToComplex(body['poles'])
-    normalized_frequency, magnitude_response,phase_response = filterResponse(zeros, poles)
+    zeros = body['zeros']
+    poles = body['poles']
+    filter= Filter(zeros,poles)
+    if body["a_coeff"]!=[]:
+        filter.setA_Coef(body["a_coeff"])
+    normalized_frequency, magnitude_response,phase_response = filter.getFilterResponse()
     response= {
         'magnitude':{
             'x':normalized_frequency.tolist(), 
@@ -32,30 +33,15 @@ def update_filter():
             'y':phase_response.tolist()
         }
     }
-    
-    if body["a_coeff"]!=[]:
-        _,all_pass_phase_response= allPassFilter(body["a_coeff"])
-        phase_response=phase_response+all_pass_phase_response
-        response["phase"]={
-            'x':normalized_frequency.tolist(),
-            'y':phase_response.tolist()
-        }
-        all_pass_zeros,all_pass_poles= conjugate(body["a_coeff"])
-        zeros=[*zeros,*all_pass_zeros]
-        poles=[*poles,*all_pass_poles]
-
-    num_coeff,den_coeff=differenceEqCoef(zeros,poles)
     return jsonify(response)
 
-8
+
 @app.route('/apply-filter', methods=['POST'])
 def apply_filter_on_signal():
-    global num_coeff
-    global den_coeff
+    global filter
     body = json.loads(request.data)
     input_signal = body['input_signal']
-    print(input_signal)
-    filtered_signal= apply_filter(num_coeff,den_coeff,input_signal)
+    filtered_signal= filter.applyFilter(point=input_signal)
     return jsonify({
         'filtered_signal':filtered_signal.tolist()
     })
@@ -63,7 +49,9 @@ def apply_filter_on_signal():
 @app.route("/preview_a",methods=["POST"])
 def preview_a_coef():
     body = json.loads(request.data)
-    normalized_frequency,preview_phase_respose= allPassFilter(body["a_prev"])
+    preview_filter=Filter()
+    preview_filter.setA_Coef(body["a_prev"])
+    normalized_frequency,_,preview_phase_respose=preview_filter.getFilterResponse()
     response={
         'x':normalized_frequency.tolist(),
         'y':preview_phase_respose.tolist()

@@ -1,5 +1,4 @@
 import numpy as np
-import scipy
 from scipy import signal
 
 def parseToComplex(x_y_form):
