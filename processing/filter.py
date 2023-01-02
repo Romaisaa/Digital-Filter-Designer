@@ -1,22 +1,18 @@
 from scipy import signal
 import numpy as np
 class Filter:
-    def __init__(self, *args) -> None:
-        if not args:
-            self.zeros=[]
-            self.poles=[]
-            return
-        self.zeros= self.__parseToComplex(args[0])
-        self.poles= self.__parseToComplex(args[1])
-
-
-    def __parseToComplex(self,List:list)-> list:
-        complex_form= [0]*len(List)
-        for i in range(len(List)):
-            complex_form[i] = List[i]["x"]+ List[i]["y"]*1j
-        return complex_form
+    def __init__(self) -> None:
+        self.zeros=[]
+        self.poles=[]
     
-    def getFilterResponse(self)->tuple:
+    def set_zeros_poles(self,zeros,poles):
+        self.zeros=zeros
+        self.poles=poles
+
+
+    
+    
+    def get_filter_response(self)->tuple:
         frequencies_values, response_complex = signal.freqz_zpk(self.zeros, self.poles, 1)
         normalized_frequency=frequencies_values/max(frequencies_values)
         magnitude_response = 20 * np.log10(np.abs(response_complex))
@@ -27,12 +23,12 @@ class Filter:
         num_coef, den_coef = signal.zpk2tf(self.zeros, self.poles, 1)
         return  num_coef, den_coef
 
-    def applyFilter(self,point):
+    def apply_filter(self,point):
         num_coef, den_coef = self.__getFilterParams()
         filtered_signal=signal.lfilter(num_coef, den_coef, point).real
         return filtered_signal
 
-    def setA_Coef(self,a_coeff:list)->None:
+    def set_a_coeff(self,a_coeff:list)->None:
         zeros,poles= self.__conjugate(a_coeff)
         self.zeros=[*self.zeros,*zeros]
         self.poles=[*self.poles,*poles]

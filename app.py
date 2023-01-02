@@ -3,11 +3,11 @@ import json
 import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, jsonify, request
-from processing.filter import Filter
+from processing.processing import processing
 app = Flask(__name__, template_folder="templates")
 
 
-filter=Filter()
+processor=processing()
 
 @app.route('/', methods=['GET'])
 def index():
@@ -15,43 +15,44 @@ def index():
 
 @app.route('/filter', methods=['POST'])
 def update_filter():
-    global filter
+    global processor
     body = json.loads(request.data)
     zeros = body['zeros']
     poles = body['poles']
-    filter= Filter(zeros,poles)
+    args=[zeros,poles]
     if body["a_coeff"]!=[]:
-        filter.setA_Coef(body["a_coeff"])
-    normalized_frequency, magnitude_response,phase_response = filter.getFilterResponse()
+        args.append(body["a_coeff"])
+
+    print(args)
+    normalized_frequency, magnitude_response,phase_response=processor.create_filter(args)
     response= {
-        'magnitude':{
-            'x':normalized_frequency.tolist(), 
-            'y':magnitude_response.tolist()
-        },
-        'phase':{
-            'x':normalized_frequency.tolist(),
-            'y':phase_response.tolist()
+            'magnitude':{
+                'x':normalized_frequency.tolist(), 
+                'y':magnitude_response.tolist()
+            },
+            'phase':{
+                'x':normalized_frequency.tolist(),
+                'y':phase_response.tolist()
+            }
         }
-    }
     return jsonify(response)
 
 
 @app.route('/apply-filter', methods=['POST'])
 def apply_filter_on_signal():
-    global filter
+    global processor
     body = json.loads(request.data)
     input_signal = body['input_signal']
-    filtered_signal= filter.applyFilter(point=input_signal)
+    filtered_signal= processor.apply_filter(input_signal)
     return jsonify({
         'filtered_signal':filtered_signal.tolist()
     })
 
 @app.route("/preview_a",methods=["POST"])
 def preview_a_coef():
+    global processor
     body = json.loads(request.data)
-    preview_filter=Filter()
-    preview_filter.setA_Coef(body["a_prev"])
-    normalized_frequency,_,preview_phase_respose=preview_filter.getFilterResponse()
+    normalized_frequency,preview_phase_respose=processor.preview_a_coef(body["a_prev"])
     response={
         'x':normalized_frequency.tolist(),
         'y':preview_phase_respose.tolist()
