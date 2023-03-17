@@ -46,7 +46,7 @@ The Web Application is built using:
 
   - Plotting, drag and drop zeros and poles. (main.js)
   - Graphs Plotting for signals (signals-generation.js)
-  - Send Zeros/poles poistions realtive to unit circle (filter-section.js)
+  - Send Zeros/poles poistions relative to unit circle (filter-section.js)
 
 - While Backend main function to
   - Create filters given zeros/poles
